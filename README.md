@@ -1,1 +1,1 @@
-# vite-apollo-mongo
+# SquadSync
