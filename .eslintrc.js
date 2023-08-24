@@ -5,18 +5,19 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    "airbnb",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "prettier",
+    'airbnb',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'prettier',
   ],
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["react", "prettier"],
+  plugins: ['react', 'prettier'],
   rules: {
-    "no-console": "off",
+    'no-console': 'off',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };
