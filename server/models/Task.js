@@ -27,7 +27,7 @@ const taskSchema = new Schema({
                 type: String,
                 required: true,
             },
-            comment: {
+            commentText: {
                 type: String,
                 maxlength: 250,
                 trim: true,

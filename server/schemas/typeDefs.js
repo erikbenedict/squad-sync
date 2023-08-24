@@ -26,8 +26,10 @@ const typeDefs = `#graphql
     taskName: String
     taskDescription: String
     dueDate: String
+    users: [User]!
     comments: [Comment]!
   }
+
   type Comment {
     _id: ID
     commentText: String
@@ -56,7 +58,7 @@ const typeDefs = `#graphql
     addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
     removeTask(categoryId: ID!, taskId: ID!): Task
-    addComment(taskId: ID!, comment: String!): Task
+    addComment(taskId: ID!, commentText: String!): Task
     removeComment(taskId: ID!, commentId: ID!): Task
   }
 `;
