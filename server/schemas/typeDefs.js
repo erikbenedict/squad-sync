@@ -47,6 +47,17 @@ const typeDefs = `#graphql
   type Mutation {
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addGroup(groupName: String!): Group
+    updateGroup(groupId: ID!, groupName: String!): Group
+    removeGroup(groupId: ID!): Group
+    addCategory(groupId: ID!, categoryName: String!): Category
+    updateCategory(categoryId: ID!, categoryName: String!): Category
+    removeCategory(groupId: ID!, categoryId: ID!): Category
+    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
+    updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
+    removeTask(categoryId: ID!, taskId: ID!): Task
+    addComment(taskId: ID!, comment: String!): Task
+    removeComment(taskId: ID!, commentId: ID!): Task
   }
 `;
 
