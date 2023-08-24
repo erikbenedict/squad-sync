@@ -5,6 +5,36 @@ const typeDefs = `#graphql
     lastName: String
     email: String
     password: String
+    groups: [Group]!
+  }
+
+   type Category {
+    _id: ID
+    categoryName: String
+    tasks: [Task]!
+  }
+
+  type Group {
+    _id: ID
+    groupName: String
+    categories: [Category]!
+    users: [User]!
+  }
+  
+  type Task {
+    _id: ID
+    taskName: String
+    taskDescription: String
+    dueDate: String
+    users: [User]!
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Auth {
@@ -28,7 +58,7 @@ const typeDefs = `#graphql
     addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
     removeTask(categoryId: ID!, taskId: ID!): Task
-    addComment(taskId: ID!, comment: String!): Task
+    addComment(taskId: ID!, commentText: String!): Task
     removeComment(taskId: ID!, commentId: ID!): Task
   }
 `;
