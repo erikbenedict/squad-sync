@@ -57,6 +57,24 @@ const resolvers = {
       }
       throw new AuthenticationError('You must be logged in to add a category.');
     },
+    addTask: async (
+      parent,
+      { categoryId, taskName, taskDescription, dueDate },
+      context
+    ) => {
+      if (context.user) {
+        const task = await Task.create({ taskName, taskDescription, dueDate });
+
+        await Category.findOneAndUpdate(
+          { _id: categoryId },
+          { $addToSet: { tasks: task._id } },
+          { new: true }
+        );
+
+        return task;
+      }
+      throw new AuthenticationError('You must be logged in to add a task.');
+    },
     updateGroup: async (parent, { groupId, groupName }, context) => {
       if (context.user) {
         const groupToUpdate = await Group.findById(groupId);
@@ -93,6 +111,27 @@ const resolvers = {
         'You must be logged in to update a category.'
       );
     },
+    updateTask: async (
+      parent,
+      { taskId, taskName, taskDescription, dueDate },
+      context
+    ) => {
+      if (context.user) {
+        const taskToUpdate = await Task.findById(taskId);
+        if (!taskToUpdate) {
+          throw new Error('Task not found');
+        }
+
+        if (taskName) taskToUpdate.taskName = taskName;
+        if (taskDescription) taskToUpdate.taskDescription = taskDescription;
+        if (dueDate) taskToUpdate.dueDate = dueDate;
+
+        await taskToUpdate.save();
+
+        return taskToUpdate;
+      }
+      throw new AuthenticationError('You must be logged in to update a task.');
+    },
     removeGroup: async (parent, { groupId }, context) => {
       if (context.user) {
         const group = await Group.findOneAndDelete({
@@ -121,6 +160,20 @@ const resolvers = {
       }
       throw new AuthenticationError(
         'You are not authorized to delete this category'
+      );
+    },
+    removeTask: async (parent, { categoryId, taskId }, context) => {
+      if (context.user) {
+        const task = await Task.findOneAndDelete({ _id: taskId });
+        await Category.findOneAndUpdate(
+          { _id: categoryId },
+          { $pull: { tasks: task._id } }
+        );
+
+        return task;
+      }
+      throw new AuthenticationError(
+        'You are not authorized to delete this task'
       );
     },
   },
