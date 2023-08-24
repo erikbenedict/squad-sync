@@ -24,7 +24,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
+  groups: 
+  [
+    { 
+      type: Schema.Types.ObjectId, ref: 'Group' 
+    }
+  ],
 });
 
 userSchema.pre('save', async function (next) {
