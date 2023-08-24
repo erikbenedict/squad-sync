@@ -11,9 +11,9 @@ const categorySchema = new Schema({
     {
         type:Schema.Types.ObjectId,
         ref: 'Task'
-    }
-  ]
-})
+    },
+  ],
+});
 
 const Category = model('Category', categorySchema);
 
