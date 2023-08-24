@@ -4,20 +4,25 @@ const { signToken, AuthenticationError } = require('../utils');
 const resolvers = {
   Query: {
     currentUser: async (parent, { email }) => User.findOne({ email }),
-    group: async (parent, { groupId }) => Group.findOne({ _id: groupId }),
-    allGroups: async (parent, { userId }) => {
+    getSingleGroup: async (parent, { groupId }) => Group.findOne({ _id: groupId }),
+    getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
 
       return userGroups.groups;
     },
-    category: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
-    allCategories: async (parent, { groupId }) => {
+    getGroupUsers: async (parent, { groupId }) => {
+      const groupUsers = await Group.findOne({ _id: groupId }).populate('users');
+
+      return groupUsers.users;
+    },
+    getSingleCategory: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
+    getGroupCategories: async (parent, { groupId }) => {
       const groupCategories = await Group.findOne({ _id: groupId }).populate('categories');
 
       return groupCategories.categories;
     },
-    task: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
-    allTasks: async (parent, { categoryId }) => {
+    getSingleTask: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
+    getCategoryTasks: async (parent, { categoryId }) => {
       const categoryTasks = await Category.findOne({ _id: categoryId }).populate('tasks');
 
       return categoryTasks.tasks;
