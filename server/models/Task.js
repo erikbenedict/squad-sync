@@ -14,6 +14,12 @@ const taskSchema = new Schema({
     dueDate: {
         type: Date,
     },
+    users: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+    ],
     comments: [
         {
             user: {
