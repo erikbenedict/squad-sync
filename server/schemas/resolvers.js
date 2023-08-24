@@ -75,6 +75,23 @@ const resolvers = {
       }
       throw new AuthenticationError('You must be logged in to add a task.');
     },
+    addComment: async (parent, { taskId, commentText }, context) => {
+      if (context.user) {
+        return Task.findOneAndUpdate(
+          { _id: taskId },
+          {
+            $addToSet: {
+              comments: { commentText, commentAuthor: context.user.firstName },
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw new AuthenticationError('You must be logged in to add a comment.');
+    },
     updateGroup: async (parent, { groupId, groupName }, context) => {
       if (context.user) {
         const groupToUpdate = await Group.findById(groupId);
@@ -174,6 +191,25 @@ const resolvers = {
       }
       throw new AuthenticationError(
         'You are not authorized to delete this task'
+      );
+    },
+    removeComment: async (parent, { taskId, commentId }, context) => {
+      if (context.user) {
+        return Task.findOneAndUpdate(
+          { _id: taskId },
+          {
+            $pull: {
+              comments: {
+                _id: commentId,
+                commentAuthor: context.user.firstName,
+              },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError(
+        'You are not authorized to delete this comment'
       );
     },
   },
