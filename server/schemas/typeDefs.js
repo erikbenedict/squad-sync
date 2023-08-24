@@ -7,6 +7,28 @@ const typeDefs = `#graphql
     password: String
   }
 
+   type Category {
+    _id: ID
+    categoryName: String
+    tasks: [Task]!
+  }
+
+  type Group {
+    _id: ID
+    groupName: String
+    categories: [Category]!
+    users: [User]!
+  }
+  
+  type Task {
+    _id: ID
+    taskName: String
+    taskDescription: String
+    dueDate: String
+    users: [User]!
+    comments: []
+  }
+
   type Auth {
     token: ID!
     currentUser: User
