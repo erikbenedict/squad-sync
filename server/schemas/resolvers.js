@@ -10,6 +10,11 @@ const resolvers = {
 
       return userGroups.groups;
     },
+    getGroupUsers: async (parent, { groupId }) => {
+      const groupUsers = await Group.findOne({ _id: groupId }).populate('users');
+
+      return groupUsers.users;
+    },
     getSingleCategory: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
     getGroupCategories: async (parent, { groupId }) => {
       const groupCategories = await Group.findOne({ _id: groupId }).populate('categories');
