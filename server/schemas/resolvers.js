@@ -4,6 +4,24 @@ const { signToken, AuthenticationError } = require('../utils');
 const resolvers = {
   Query: {
     currentUser: async (parent, { email }) => User.findOne({ email }),
+    getSingleGroup: async (parent, { groupId }) => Group.findOne({ _id: groupId }),
+    getUserGroups: async (parent, { userId }) => {
+      const userGroups = await User.findOne({ _id: userId }).populate('groups');
+
+      return userGroups.groups;
+    },
+    getSingleCategory: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
+    getGroupCategories: async (parent, { groupId }) => {
+      const groupCategories = await Group.findOne({ _id: groupId }).populate('categories');
+
+      return groupCategories.categories;
+    },
+    getSingleTask: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
+    getCategoryTasks: async (parent, { categoryId }) => {
+      const categoryTasks = await Category.findOne({ _id: categoryId }).populate('tasks');
+
+      return categoryTasks.tasks;
+    },
   },
 
   Mutation: {
