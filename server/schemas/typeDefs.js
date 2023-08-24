@@ -5,6 +5,7 @@ const typeDefs = `#graphql
     lastName: String
     email: String
     password: String
+    groups: [Group]!
   }
 
    type Category {
@@ -25,8 +26,13 @@ const typeDefs = `#graphql
     taskName: String
     taskDescription: String
     dueDate: String
-    users: [User]!
-    comments: []
+    comments: [Comment]!
+  }
+  type Comment {
+    _id: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Auth {
