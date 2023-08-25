@@ -74,6 +74,22 @@ const resolvers = {
       }
       throw AuthenticationError('You need to be logged in!');
     },
+    addUserToGroup: async (parent, {groupId, userId}, context) => {
+      if(context.user) {
+        const userToAdd = await User.findById(userId);
+      const groupToUpdate = await Group.findById(groupId);
+
+      if (!userToAdd || !groupToUpdate) {
+        throw new Error('User or group not found.');
+      }
+
+      groupToUpdate.users.push(userToAdd._id);
+      await groupToUpdate.save();
+
+      return groupToUpdate;
+      }
+      throw new AuthenticationError('You must be logged in to add a user to a group.');
+    },
     addCategory: async (parent, { groupId, categoryName }, context) => {
       if (context.user) {
         const category = await Category.create({ categoryName });
@@ -215,6 +231,22 @@ const resolvers = {
       throw new AuthenticationError(
         'You are not authorized to delete this group'
       );
+    },
+    removeUserFromGroup: async (parent, { userId, groupId }, context) => {
+      if (context.user) {
+        const userToRemove = await User.findById(userId);
+        const groupToUpdate = await Group.findById(groupId);
+  
+        if (!userToRemove || !groupToUpdate) {
+          throw new Error('User or group not found.');
+        }
+  
+        groupToUpdate.users = groupToUpdate.users.filter(id => id.toString() !== userId);
+        await groupToUpdate.save();
+  
+        return groupToUpdate;
+      }
+      throw new AuthenticationError('You must be logged in to remove a user from a group.');
     },
     removeCategory: async (parent, { groupId, categoryId }, context) => {
       if (context.user) {

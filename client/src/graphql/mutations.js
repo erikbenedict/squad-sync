@@ -54,6 +54,20 @@ export const ADD_GROUP = gql`
   }
 `;
 
+export const ADD_USER_TO_GROUP = gql`
+  mutation addUserToGroup($groupId: ID!, $userId: ID!) {
+    addUserToGroup(groupId: $groupId, userId: $userId) {
+      _id
+      groupName
+      users {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
 export const ADD_CATEGORY = gql`
   mutation addCategory($groupId: ID!, $categoryName: String!) {
     addCategory(groupId: $groupId, categoryName: $categoryName) {
@@ -193,6 +207,20 @@ export const REMOVE_GROUP = gql`
   mutation removeGroup($groupId: ID!) {
     removeGroup(groupId: $groupId) {
       _id
+    }
+  }
+`;
+
+export const REMOVE_USER_FROM_GROUP = gql`
+  mutation removeUserFromGroup($userId: ID!, $groupId: ID!) {
+    removeUserFromGroup(userId: $userId, groupId: $groupId) {
+      _id
+      groupName
+      users {
+        _id
+        firstName
+        lastName
+      }
     }
   }
 `;

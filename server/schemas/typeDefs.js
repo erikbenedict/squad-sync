@@ -57,6 +57,7 @@ const typeDefs = `#graphql
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addGroup(groupName: String!): Group
+    addUserToGroup(groupId: ID!, userId: ID!): Group
     addCategory(groupId: ID!, categoryName: String!): Category
     addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, assignedUserId: ID!): Task
     addComment(taskId: ID!, commentText: String!): Task
@@ -64,6 +65,7 @@ const typeDefs = `#graphql
     updateCategory(categoryId: ID!, categoryName: String!): Category
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!, assignedUserId: ID!): Task
     removeGroup(groupId: ID!): Group
+    removeUserFromGroup(userId: ID!, groupId: ID!): Group
     removeCategory(groupId: ID!, categoryId: ID!): Category
     removeTask(categoryId: ID!, taskId: ID!): Task
     removeComment(taskId: ID!, commentId: ID!): Task
