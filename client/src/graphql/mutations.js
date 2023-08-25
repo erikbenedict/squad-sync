@@ -41,7 +41,10 @@ export const ADD_GROUP = gql`
     addGroup(groupName: $groupName) {
       _id
       groupName
-      categories
+      categories {
+        _id
+        categoryName
+      }
       users {
         _id
         firstName
@@ -59,6 +62,12 @@ export const ADD_CATEGORY = gql`
       tasks {
         _id
         taskName
+        dueDate
+        user {
+          _id
+          firstName
+          lastName
+        }
       }
     }
   }
@@ -70,23 +79,30 @@ export const ADD_TASK = gql`
     $taskName: String!
     $taskDescription: String
     $dueDate: Date
-  ){
-  addTask(categoryId: $categoryId, taskName: $taskName, taskDescription: $taskDescription, dueDate)
-  } {
-    _id
-    taskName
-    taskDescription
-    dueDate
-    users {
+    $assignedUserId: ID!
+  ) {
+    addTask(
+      categoryId: $categoryId
+      taskName: $taskName
+      taskDescription: $taskDescription
+      dueDate: $dueDate
+      assignedUserId: $assignedUserId
+    ) {
       _id
-      firstName
-      lastName
-    }
-    comments {
-      _id
-      commentText
-      commentAuthor
-      createdAt
+      taskName
+      taskDescription
+      dueDate
+      users {
+        _id
+        firstName
+        lastName
+      }
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;
@@ -98,6 +114,77 @@ export const ADD_COMMENT = gql`
       commentText
       commentAuthor
       createdAt
+    }
+  }
+`;
+
+export const UPDATE_GROUP = gql`
+  mutation updatedGroup($groupId: ID!, $groupName: String!) {
+    updateGroup(groupId: $groupId, groupName: $groupName) {
+      _id
+      groupName
+      categories {
+        _id
+        categoryName
+      }
+      users {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const UPDATE_CATEGORY = gql`
+  mutation updateCategory($categoryId: ID!, $categoryName: String!) {
+    updateCategory(categoryId: $categoryId, categoryName: $categoryName) {
+      _id
+      categoryName
+      tasks {
+        _id
+        taskName
+        dueDate
+        user {
+          _id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_TASK = gql`
+  mutation updateTask(
+    $taskId: ID!
+    $taskName: String!
+    $taskDescription: String
+    $dueDate: Date
+    $assignedUserId: ID!
+  ) {
+    updateTask(
+      taskId: $taskId
+      taskName: $taskName
+      taskDescription: $taskDescription
+      dueDate: $dueDate
+      assignedUserId: $assignedUserId
+    ) {
+      _id
+      taskName
+      taskDescription
+      dueDate
+      users {
+        _id
+        firstName
+        lastName
+      }
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;

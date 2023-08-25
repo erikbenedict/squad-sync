@@ -4,26 +4,34 @@ const { signToken, AuthenticationError } = require('../utils');
 const resolvers = {
   Query: {
     currentUser: async (parent, { email }) => User.findOne({ email }),
-    getSingleGroup: async (parent, { groupId }) => Group.findOne({ _id: groupId }),
+    getSingleGroup: async (parent, { groupId }) =>
+      Group.findOne({ _id: groupId }),
     getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
 
       return userGroups.groups;
     },
     getGroupUsers: async (parent, { groupId }) => {
-      const groupUsers = await Group.findOne({ _id: groupId }).populate('users');
+      const groupUsers = await Group.findOne({ _id: groupId }).populate(
+        'users'
+      );
 
       return groupUsers.users;
     },
-    getSingleCategory: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
+    getSingleCategory: async (parent, { categoryId }) =>
+      Category.findOne({ _id: categoryId }),
     getGroupCategories: async (parent, { groupId }) => {
-      const groupCategories = await Group.findOne({ _id: groupId }).populate('categories');
+      const groupCategories = await Group.findOne({ _id: groupId }).populate(
+        'categories'
+      );
 
       return groupCategories.categories;
     },
     getSingleTask: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
     getCategoryTasks: async (parent, { categoryId }) => {
-      const categoryTasks = await Category.findOne({ _id: categoryId }).populate('tasks');
+      const categoryTasks = await Category.findOne({
+        _id: categoryId,
+      }).populate('tasks');
 
       return categoryTasks.tasks;
     },
@@ -82,17 +90,30 @@ const resolvers = {
     },
     addTask: async (
       parent,
-      { categoryId, taskName, taskDescription, dueDate },
+      { categoryId, taskName, taskDescription, dueDate, assignedUserId },
       context
     ) => {
       if (context.user) {
-        const task = await Task.create({ taskName, taskDescription, dueDate });
+        const user = await User.findById(assignedUserId);
+
+        if (!user) {
+          throw new Error('User not found.');
+        }
+        const task = await Task.create({
+          taskName,
+          taskDescription,
+          dueDate,
+          users: [user._id],
+        });
 
         await Category.findOneAndUpdate(
           { _id: categoryId },
           { $addToSet: { tasks: task._id } },
           { new: true }
         );
+
+        user.tasks.push(task._id);
+        await user.save();
 
         return task;
       }
@@ -153,7 +174,7 @@ const resolvers = {
     },
     updateTask: async (
       parent,
-      { taskId, taskName, taskDescription, dueDate },
+      { taskId, taskName, taskDescription, dueDate, assignedUserId },
       context
     ) => {
       if (context.user) {
@@ -165,6 +186,13 @@ const resolvers = {
         if (taskName) taskToUpdate.taskName = taskName;
         if (taskDescription) taskToUpdate.taskDescription = taskDescription;
         if (dueDate) taskToUpdate.dueDate = dueDate;
+        if (assignedUserId) {
+          const assignedUser = await User.findById(assignedUserId);
+          if (!assignedUser) {
+            throw new Error('Assigned user not found.');
+          }
+          taskToUpdate.users = [assignedUser._id];
+        }
 
         await taskToUpdate.save();
 
