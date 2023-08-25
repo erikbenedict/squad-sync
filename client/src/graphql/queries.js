@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 // eslint-disable-next-line import/prefer-default-export
 export const QUERY_CURRENT_USER = gql`
   query getCurrentUser($email: String!) {
-    currentUser(email: $email) {
+    getCurrentUser(email: $email) {
       _id
       email
       firstName
@@ -14,7 +14,7 @@ export const QUERY_CURRENT_USER = gql`
 
 export const QUERY_USER_GROUPS = gql`
   query getUserGroups($userId: ID!) {
-    userGroups(userId: $userId) {
+    getUserGroups(userId: $userId) {
       _id
       groupName
       users {
@@ -39,7 +39,7 @@ export const QUERY_USER_GROUPS = gql`
 
 export const QUERY_SINGLE_GROUP = gql`
   query getSingleGroup($groupId: ID!) {
-    singleGroup(groupId: $groupId) {
+    getSingleGroup(groupId: $groupId) {
       _id
       groupName
       categories {
@@ -72,7 +72,7 @@ export const QUERY_SINGLE_GROUP = gql`
 
 export const QUERY_SINGLE_CATEGORY = gql`
   query getSingleCategory($categoryId: ID!) {
-    singleCategory(categoryId: $categoryId) {
+    getSingleCategory(categoryId: $categoryId) {
       _id
       categoryName
       tasks {
@@ -106,7 +106,7 @@ export const QUERY_SINGLE_CATEGORY = gql`
 
 export const QUERY_SINGLE_TASK = gql`
   query getSingleTask($taskId: ID!) {
-    singleTask(taskId: $taskId) {
+    getSingleTask(taskId: $taskId) {
       _id
       taskName
       taskDescription
