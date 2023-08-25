@@ -4,29 +4,37 @@ const { signToken, AuthenticationError } = require('../utils');
 const resolvers = {
   Query: {
     currentUser: async (parent, { email }) => User.findOne({ email }),
-    getSingleGroup: async (parent, { groupId }) => Group.findOne({ _id: groupId }),
     getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
-
+      
       return userGroups.groups;
     },
-    getGroupUsers: async (parent, { groupId }) => {
-      const groupUsers = await Group.findOne({ _id: groupId }).populate('users');
+    getSingleGroup: async (parent, { groupId }) =>
+      Group.findOne({ _id: groupId }),
+    // getGroupUsers: async (parent, { groupId }) => {
+    //   const groupUsers = await Group.findOne({ _id: groupId }).populate(
+    //     'users'
+    //   );
 
-      return groupUsers.users;
-    },
-    getSingleCategory: async (parent, { categoryId }) => Category.findOne({ _id: categoryId }),
-    getGroupCategories: async (parent, { groupId }) => {
-      const groupCategories = await Group.findOne({ _id: groupId }).populate('categories');
+    //   return groupUsers.users;
+    // },
+    getSingleCategory: async (parent, { categoryId }) =>
+      Category.findOne({ _id: categoryId }),
+    // getGroupCategories: async (parent, { groupId }) => {
+    //   const groupCategories = await Group.findOne({ _id: groupId }).populate(
+    //     'categories'
+    //   );
 
-      return groupCategories.categories;
-    },
+    //   return groupCategories.categories;
+    // },
     getSingleTask: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
-    getCategoryTasks: async (parent, { categoryId }) => {
-      const categoryTasks = await Category.findOne({ _id: categoryId }).populate('tasks');
+    // getCategoryTasks: async (parent, { categoryId }) => {
+    //   const categoryTasks = await Category.findOne({
+    //     _id: categoryId,
+    //   }).populate('tasks');
 
-      return categoryTasks.tasks;
-    },
+    //   return categoryTasks.tasks;
+    // },
   },
 
   Mutation: {
@@ -66,6 +74,22 @@ const resolvers = {
       }
       throw AuthenticationError('You need to be logged in!');
     },
+    addUserToGroup: async (parent, {groupId, userId}, context) => {
+      if(context.user) {
+        const userToAdd = await User.findById(userId);
+      const groupToUpdate = await Group.findById(groupId);
+
+      if (!userToAdd || !groupToUpdate) {
+        throw new Error('User or group not found.');
+      }
+
+      groupToUpdate.users.push(userToAdd._id);
+      await groupToUpdate.save();
+
+      return groupToUpdate;
+      }
+      throw new AuthenticationError('You must be logged in to add a user to a group.');
+    },
     addCategory: async (parent, { groupId, categoryName }, context) => {
       if (context.user) {
         const category = await Category.create({ categoryName });
@@ -82,17 +106,31 @@ const resolvers = {
     },
     addTask: async (
       parent,
-      { categoryId, taskName, taskDescription, dueDate },
+      { categoryId, taskName, taskDescription, dueDate, priority, assignedUserId },
       context
     ) => {
       if (context.user) {
-        const task = await Task.create({ taskName, taskDescription, dueDate });
+        const user = await User.findById(assignedUserId);
+
+        if (!user) {
+          throw new Error('User not found.');
+        }
+        const task = await Task.create({
+          taskName,
+          taskDescription,
+          dueDate,
+          priority,
+          users: [user._id],
+        });
 
         await Category.findOneAndUpdate(
           { _id: categoryId },
           { $addToSet: { tasks: task._id } },
           { new: true }
         );
+
+        user.tasks.push(task._id);
+        await user.save();
 
         return task;
       }
@@ -153,7 +191,7 @@ const resolvers = {
     },
     updateTask: async (
       parent,
-      { taskId, taskName, taskDescription, dueDate },
+      { taskId, taskName, taskDescription, dueDate, priority, assignedUserId },
       context
     ) => {
       if (context.user) {
@@ -165,6 +203,14 @@ const resolvers = {
         if (taskName) taskToUpdate.taskName = taskName;
         if (taskDescription) taskToUpdate.taskDescription = taskDescription;
         if (dueDate) taskToUpdate.dueDate = dueDate;
+        if (priority) taskToUpdate.priority = priority;
+        if (assignedUserId) {
+          const assignedUser = await User.findById(assignedUserId);
+          if (!assignedUser) {
+            throw new Error('Assigned user not found.');
+          }
+          taskToUpdate.users = [assignedUser._id];
+        }
 
         await taskToUpdate.save();
 
@@ -187,6 +233,22 @@ const resolvers = {
       throw new AuthenticationError(
         'You are not authorized to delete this group'
       );
+    },
+    removeUserFromGroup: async (parent, { userId, groupId }, context) => {
+      if (context.user) {
+        const userToRemove = await User.findById(userId);
+        const groupToUpdate = await Group.findById(groupId);
+  
+        if (!userToRemove || !groupToUpdate) {
+          throw new Error('User or group not found.');
+        }
+  
+        groupToUpdate.users = groupToUpdate.users.filter(id => id.toString() !== userId);
+        await groupToUpdate.save();
+  
+        return groupToUpdate;
+      }
+      throw new AuthenticationError('You must be logged in to remove a user from a group.');
     },
     removeCategory: async (parent, { groupId, categoryId }, context) => {
       if (context.user) {

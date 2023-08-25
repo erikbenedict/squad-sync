@@ -15,6 +15,11 @@ const taskSchema = new Schema({
     dueDate: {
         type: Date,
     },
+    priority:{
+      type: String,
+      required: true,
+      trim: true,
+    },
     users: [
         {
             type: Schema.Types.ObjectId,
