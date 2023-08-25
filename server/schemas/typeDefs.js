@@ -62,8 +62,8 @@ const typeDefs = `#graphql
     addCategory(groupId: ID!, categoryName: String!): Category
     updateCategory(categoryId: ID!, categoryName: String!): Category
     removeCategory(groupId: ID!, categoryId: ID!): Category
-    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
-    updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: Date): Task
+    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!): Task
+    updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!): Task
     removeTask(categoryId: ID!, taskId: ID!): Task
     addComment(taskId: ID!, commentText: String!): Task
     removeComment(taskId: ID!, commentId: ID!): Task
