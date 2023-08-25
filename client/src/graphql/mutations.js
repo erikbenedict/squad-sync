@@ -188,3 +188,35 @@ export const UPDATE_TASK = gql`
     }
   }
 `;
+
+export const REMOVE_GROUP = gql`
+  mutation removeGroup($groupId: ID!) {
+    removeGroup(groupId: $groupId) {
+      _id
+    }
+  }
+`;
+
+export const REMOVE_CATEGORY = gql`
+  mutation removeCategory($categoryId: ID!) {
+    removeCategory(categoryId: $categoryId) {
+      _id
+    }
+  }
+`;
+
+export const REMOVE_TASK = gql`
+  mutation removeTask($taskId: ID!) {
+    removeTask(taskId: $taskId) {
+      _id
+    }
+  }
+`;
+
+export const REMOVE_COMMENT = gql`
+  mutation removeComment($commentId: ID!) {
+    removeComment(commentId: $commentId) {
+      _id
+    }
+  }
+`;
