@@ -78,6 +78,7 @@ export const QUERY_SINGLE_CATEGORY = gql`
       tasks {
         taskName
         dueDate
+        priority
         users {
           _id
           firstName
@@ -110,6 +111,7 @@ export const QUERY_SINGLE_TASK = gql`
       taskName
       taskDescription
       dueDate
+      priority
       users {
         _id
         firstName

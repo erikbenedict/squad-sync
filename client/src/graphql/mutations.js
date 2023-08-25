@@ -93,6 +93,7 @@ export const ADD_TASK = gql`
     $taskName: String!
     $taskDescription: String
     $dueDate: Date
+    $priority: String!
     $assignedUserId: ID!
   ) {
     addTask(
@@ -100,12 +101,14 @@ export const ADD_TASK = gql`
       taskName: $taskName
       taskDescription: $taskDescription
       dueDate: $dueDate
+      priority: $priority
       assignedUserId: $assignedUserId
     ) {
       _id
       taskName
       taskDescription
       dueDate
+      priority
       users {
         _id
         firstName
@@ -175,6 +178,7 @@ export const UPDATE_TASK = gql`
     $taskName: String!
     $taskDescription: String
     $dueDate: Date
+    $priority: String!
     $assignedUserId: ID!
   ) {
     updateTask(
@@ -182,12 +186,14 @@ export const UPDATE_TASK = gql`
       taskName: $taskName
       taskDescription: $taskDescription
       dueDate: $dueDate
+      priority: $priority
       assignedUserId: $assignedUserId
     ) {
       _id
       taskName
       taskDescription
       dueDate
+      priority
       users {
         _id
         firstName

@@ -106,7 +106,7 @@ const resolvers = {
     },
     addTask: async (
       parent,
-      { categoryId, taskName, taskDescription, dueDate, assignedUserId },
+      { categoryId, taskName, taskDescription, dueDate, priority, assignedUserId },
       context
     ) => {
       if (context.user) {
@@ -119,6 +119,7 @@ const resolvers = {
           taskName,
           taskDescription,
           dueDate,
+          priority,
           users: [user._id],
         });
 
@@ -190,7 +191,7 @@ const resolvers = {
     },
     updateTask: async (
       parent,
-      { taskId, taskName, taskDescription, dueDate, assignedUserId },
+      { taskId, taskName, taskDescription, dueDate, priority, assignedUserId },
       context
     ) => {
       if (context.user) {
@@ -202,6 +203,7 @@ const resolvers = {
         if (taskName) taskToUpdate.taskName = taskName;
         if (taskDescription) taskToUpdate.taskDescription = taskDescription;
         if (dueDate) taskToUpdate.dueDate = dueDate;
+        if (priority) taskToUpdate.priority = priority;
         if (assignedUserId) {
           const assignedUser = await User.findById(assignedUserId);
           if (!assignedUser) {
