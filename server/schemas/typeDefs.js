@@ -23,9 +23,10 @@ const typeDefs = `#graphql
   
   type Task {
     _id: ID
-    taskName: String
+    taskName: String!
     taskDescription: String
     dueDate: String
+    priority: String!
     users: [User]!
     comments: [Comment]!
   }
@@ -45,11 +46,11 @@ const typeDefs = `#graphql
   type Query {
     currentUser(email: String!): User
     getUserGroups(userId: ID!): [Group]!
-    getGroupUsers(groupId: ID!): [User]!
+    #getGroupUsers(groupId: ID!): [User]!
     getSingleGroup(groupId: ID!): Group
-    getGroupCategories(groupId: ID!): [Category]!
+    #getGroupCategories(groupId: ID!): [Category]!
     getSingleCategory(categoryId: ID!): Category
-    getCategoryTasks(categoryId: ID!): [Task]!
+    #getCategoryTasks(categoryId: ID!): [Task]!
     getSingleTask(taskId: ID!): Task
   }
 
@@ -57,15 +58,17 @@ const typeDefs = `#graphql
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addGroup(groupName: String!): Group
-    updateGroup(groupId: ID!, groupName: String!): Group
-    removeGroup(groupId: ID!): Group
+    addUserToGroup(groupId: ID!, userId: ID!): Group
     addCategory(groupId: ID!, categoryName: String!): Category
-    updateCategory(categoryId: ID!, categoryName: String!): Category
-    removeCategory(groupId: ID!, categoryId: ID!): Category
-    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!): Task
-    updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!): Task
-    removeTask(categoryId: ID!, taskId: ID!): Task
+    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID!): Task
     addComment(taskId: ID!, commentText: String!): Task
+    updateGroup(groupId: ID!, groupName: String!): Group
+    updateCategory(categoryId: ID!, categoryName: String!): Category
+    updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String! assignedUserId: ID!): Task
+    removeGroup(groupId: ID!): Group
+    removeUserFromGroup(userId: ID!, groupId: ID!): Group
+    removeCategory(groupId: ID!, categoryId: ID!): Category
+    removeTask(categoryId: ID!, taskId: ID!): Task
     removeComment(taskId: ID!, commentId: ID!): Task
   }
 `;
