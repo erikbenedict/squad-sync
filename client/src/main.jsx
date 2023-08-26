@@ -16,6 +16,8 @@ import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import GroupPage from "./pages/GroupPage";
+import TaskPage from "./pages/TaskPage"
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -34,10 +36,18 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="groupPage"
+        path="groupPage/:id"
         element={
           <ProtectedRoute>
             <GroupPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="taskPage/:id"
+        element={
+          <ProtectedRoute>
+            <TaskPage />
           </ProtectedRoute>
         }
       />
