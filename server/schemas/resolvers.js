@@ -6,7 +6,7 @@ const resolvers = {
     currentUser: async (parent, { email }) => User.findOne({ email }),
     getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
-      
+
       return userGroups.groups;
     },
     getSingleGroup: async (parent, { groupId }) =>
@@ -74,21 +74,23 @@ const resolvers = {
       }
       throw AuthenticationError('You need to be logged in!');
     },
-    addUserToGroup: async (parent, {groupId, userId}, context) => {
-      if(context.user) {
+    addUserToGroup: async (parent, { groupId, userId }, context) => {
+      if (context.user) {
         const userToAdd = await User.findById(userId);
-      const groupToUpdate = await Group.findById(groupId);
+        const groupToUpdate = await Group.findById(groupId);
 
-      if (!userToAdd || !groupToUpdate) {
-        throw new Error('User or group not found.');
+        if (!userToAdd || !groupToUpdate) {
+          throw new Error('User or group not found.');
+        }
+
+        groupToUpdate.users.push(userToAdd._id);
+        await groupToUpdate.save();
+
+        return groupToUpdate;
       }
-
-      groupToUpdate.users.push(userToAdd._id);
-      await groupToUpdate.save();
-
-      return groupToUpdate;
-      }
-      throw new AuthenticationError('You must be logged in to add a user to a group.');
+      throw new AuthenticationError(
+        'You must be logged in to add a user to a group.'
+      );
     },
     addCategory: async (parent, { groupId, categoryName }, context) => {
       if (context.user) {
@@ -106,7 +108,14 @@ const resolvers = {
     },
     addTask: async (
       parent,
-      { categoryId, taskName, taskDescription, dueDate, priority, assignedUserId },
+      {
+        categoryId,
+        taskName,
+        taskDescription,
+        dueDate,
+        priority,
+        assignedUserId,
+      },
       context
     ) => {
       if (context.user) {
@@ -238,17 +247,21 @@ const resolvers = {
       if (context.user) {
         const userToRemove = await User.findById(userId);
         const groupToUpdate = await Group.findById(groupId);
-  
+
         if (!userToRemove || !groupToUpdate) {
           throw new Error('User or group not found.');
         }
-  
-        groupToUpdate.users = groupToUpdate.users.filter(id => id.toString() !== userId);
+
+        groupToUpdate.users = groupToUpdate.users.filter(
+          (id) => id.toString() !== userId
+        );
         await groupToUpdate.save();
-  
+
         return groupToUpdate;
       }
-      throw new AuthenticationError('You must be logged in to remove a user from a group.');
+      throw new AuthenticationError(
+        'You must be logged in to remove a user from a group.'
+      );
     },
     removeCategory: async (parent, { groupId, categoryId }, context) => {
       if (context.user) {
