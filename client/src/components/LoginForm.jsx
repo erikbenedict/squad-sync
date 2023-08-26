@@ -45,7 +45,8 @@ export default function Login() {
           <p className="error-text">The provided credentials are incorrect</p>
         </div>
       ) : null}
-      <form id="login-form" onSubmit={handleFormSubmit}>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <form id="login-form " onSubmit={handleFormSubmit}>
         <h2>Login</h2>
         <label htmlFor="email">
           Email:
@@ -76,6 +77,7 @@ export default function Login() {
           <Link to="/register">here</Link>
         </p>
       </form>
+      </div>
     </>
   );
 }

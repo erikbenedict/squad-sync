@@ -1,3 +1,4 @@
+// App.jsx
 import "./App.css";
 import {
   ApolloClient,
@@ -8,6 +9,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";

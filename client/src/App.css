@@ -1,7 +1,7 @@
 /* src/index.css */
 
 
-html,
+ html,
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   min-height: 100vh;
@@ -10,32 +10,32 @@ body {
   margin: 0;
 }
 
-#root {
+/* #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
+} */
 
-nav {
+/* nav {
   height: 50px;
   background-color: lightgray;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0.5rem;
-}
+} */
 
-nav>a,
+/* nav>a,
 nav>button {
   margin-left: 1rem;
   text-decoration: none;
-}
+} */
 
-main {
+/* main {
   flex-grow: 1;
-}
+} */
 
-footer {
+/* footer {
   height: 50px;
   background-color: lightgray;
   display: flex;
@@ -43,14 +43,14 @@ footer {
   align-items: center;
   padding: 0.5rem;
   text-align: center;
-}
+} */
 
-input {
+ input {
   width: 100%;
   padding: 0.25rem;
-}
+} 
 
-button {
+/* button {
   display: inline-block;
   font-weight: 400;
   color: #212529;
@@ -62,7 +62,7 @@ button {
   border-radius: .25rem;
   color: #fff;
   background-color: #007bff;
-}
+} */
 
 #login-form,
 #registration-form {
@@ -75,7 +75,7 @@ button {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.page-title {
+/* .page-title {
   text-align: center;
-}
+}  */
 
