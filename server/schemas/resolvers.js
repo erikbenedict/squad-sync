@@ -9,8 +9,10 @@ const resolvers = {
 
       return userGroups.groups;
     },
-    getSingleGroup: async (parent, { groupId }) =>
-      Group.findOne({ _id: groupId }),
+    getSingleGroup: async (parent, { groupId }) => {
+      const group = await Group.findOne({ _id: groupId }).populate('users');
+      return group;
+    },
     // getGroupUsers: async (parent, { groupId }) => {
     //   const groupUsers = await Group.findOne({ _id: groupId }).populate(
     //     'users'
@@ -72,7 +74,6 @@ const resolvers = {
 
         return group;
       }
-      throw AuthenticationError('You need to be logged in!');
     },
     addUserToGroup: async (parent, { groupId, userId }, context) => {
       if (context.user) {
@@ -88,9 +89,6 @@ const resolvers = {
 
         return groupToUpdate;
       }
-      throw new AuthenticationError(
-        'You must be logged in to add a user to a group.'
-      );
     },
     addCategory: async (parent, { groupId, categoryName }, context) => {
       if (context.user) {
@@ -104,7 +102,6 @@ const resolvers = {
 
         return category;
       }
-      throw new AuthenticationError('You must be logged in to add a category.');
     },
     addTask: async (
       parent,
@@ -143,7 +140,6 @@ const resolvers = {
 
         return task;
       }
-      throw new AuthenticationError('You must be logged in to add a task.');
     },
     addComment: async (parent, { taskId, commentText }, context) => {
       if (context.user) {
@@ -160,7 +156,6 @@ const resolvers = {
           }
         );
       }
-      throw new AuthenticationError('You must be logged in to add a comment.');
     },
     updateGroup: async (parent, { groupId, groupName }, context) => {
       if (context.user) {
@@ -169,18 +164,11 @@ const resolvers = {
           throw new Error('Group not found.');
         }
 
-        if (!groupToUpdate.users.includes(context.user._id.toString())) {
-          throw new AuthenticationError(
-            'You are not authorized to update this group.'
-          );
-        }
-
         groupToUpdate.groupName = groupName;
         await groupToUpdate.save();
 
         return groupToUpdate;
       }
-      throw new AuthenticationError('You must be logged in to update a group.');
     },
     updateCategory: async (parent, { categoryId, categoryName }, context) => {
       if (context.user) {
@@ -194,9 +182,6 @@ const resolvers = {
 
         return categoryToUpdate;
       }
-      throw new AuthenticationError(
-        'You must be logged in to update a category.'
-      );
     },
     updateTask: async (
       parent,
@@ -225,7 +210,6 @@ const resolvers = {
 
         return taskToUpdate;
       }
-      throw new AuthenticationError('You must be logged in to update a task.');
     },
     removeGroup: async (parent, { groupId }, context) => {
       if (context.user) {
@@ -239,9 +223,6 @@ const resolvers = {
 
         return group;
       }
-      throw new AuthenticationError(
-        'You are not authorized to delete this group'
-      );
     },
     removeUserFromGroup: async (parent, { userId, groupId }, context) => {
       if (context.user) {
@@ -259,9 +240,6 @@ const resolvers = {
 
         return groupToUpdate;
       }
-      throw new AuthenticationError(
-        'You must be logged in to remove a user from a group.'
-      );
     },
     removeCategory: async (parent, { groupId, categoryId }, context) => {
       if (context.user) {
@@ -273,9 +251,6 @@ const resolvers = {
 
         return category;
       }
-      throw new AuthenticationError(
-        'You are not authorized to delete this category'
-      );
     },
     removeTask: async (parent, { categoryId, taskId }, context) => {
       if (context.user) {
@@ -287,9 +262,6 @@ const resolvers = {
 
         return task;
       }
-      throw new AuthenticationError(
-        'You are not authorized to delete this task'
-      );
     },
     removeComment: async (parent, { taskId, commentId }, context) => {
       if (context.user) {
@@ -306,9 +278,6 @@ const resolvers = {
           { new: true }
         );
       }
-      throw new AuthenticationError(
-        'You are not authorized to delete this comment'
-      );
     },
   },
 };

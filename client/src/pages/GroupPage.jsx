@@ -7,14 +7,13 @@ import SingleCategory from '../components/SingleCategory';
 function GroupPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const { groupId } = useParams();
-  const { loading, error, data } = useQuery(QUERY_SINGLE_GROUP, {
-    variables: { groupId },
+  const { loading, data } = useQuery(QUERY_SINGLE_GROUP, {
+    variables: { groupId: groupId },
   });
+  console.log('-----> data <-----', data);
+  const group = data?.group || {};
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const group = data.getSingleGroup;
 
   return (
     <div className="group-container">
@@ -38,12 +37,7 @@ function GroupPage() {
               className="category-div"
               onClick={() => setSelectedCategory(category)}
             >
-              <h3
-                className="category-name
-            "
-              >
-                {category.categoryName}
-              </h3>
+              <h3 className="category-name">{category.categoryName}</h3>
             </div>
           ))}
         </div>
