@@ -1,37 +1,48 @@
-// DarkModeToggle.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DarkModeToggle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   useEffect(() => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (localStorage.getItem('color-theme') === 'dark' || (!localStorage.getItem('color-theme') && prefersDark)) {
+    const savedTheme = localStorage.getItem('color-theme');
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      setIsDarkMode(true);
       document.documentElement.classList.add('dark');
     } else {
+      setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
   }, []);
 
   const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+
     const html = document.documentElement;
-    if (html.classList.contains('dark')) {
-      html.classList.remove('dark');
-      localStorage.setItem('color-theme', 'light');
-    } else {
+    if (newDarkMode) {
       html.classList.add('dark');
       localStorage.setItem('color-theme', 'dark');
+    } else {
+      html.classList.remove('dark');
+      localStorage.setItem('color-theme', 'light');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-gray-100 dark:bg-gray-900">
-    <button
-      id="theme-toggle"
-      type="button"
-      onClick={toggleDarkMode}
-      className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
-    >Toggle Dark Mode
-    </button>
-    </div>
+    <label className="relative inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        value=""
+        className="sr-only peer"
+        checked={isDarkMode}
+        onChange={toggleDarkMode}
+      />
+      <div className={`w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600`} />
+      <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+        {isDarkMode ? 'Dark Mode' : 'Light Mode'}
+      </span>
+    </label>
   );
 };
 

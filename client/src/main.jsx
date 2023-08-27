@@ -12,7 +12,6 @@ import { CurrentUserProvider } from "./context";
 
 
 import "flowbite/dist/flowbite.min.css";
-import DarkModeToggle from "./components/DarkModeToggle";
 
 
 
@@ -48,7 +47,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CookiesProvider>
       <CurrentUserProvider>
-         <DarkModeToggle/>
            <RouterProvider router={router} />
       </CurrentUserProvider>
     </CookiesProvider>
