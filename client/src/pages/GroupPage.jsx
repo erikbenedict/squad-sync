@@ -1,17 +1,19 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { QUERY_SINGLE_GROUP } from '../graphql/queries';
-import SingleCategory from '../components/SingleCategory';
+// import SingleCategory from '../components/SingleCategory';
 
 function GroupPage() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
   const { groupId } = useParams();
+  console.log('----> GROUP ID <----', groupId);
   const { loading, data } = useQuery(QUERY_SINGLE_GROUP, {
     variables: { groupId: groupId },
   });
-  console.log('-----> data <-----', data);
-  const group = data?.group || {};
+  const group = data?.getSingleGroup || {};
+  console.log('-----> DATA <-----', data);
+  console.log('-----> GROUP <-----', group);
 
   if (loading) return <p>Loading...</p>;
 
@@ -31,7 +33,7 @@ function GroupPage() {
       <div className="categories-container">
         <div className="category-list">
           <h2>Categories</h2>
-          {group.categories.map((category) => (
+          {/* {group.categories.map((category) => (
             <div
               key={category._id}
               className="category-div"
@@ -39,11 +41,11 @@ function GroupPage() {
             >
               <h3 className="category-name">{category.categoryName}</h3>
             </div>
-          ))}
+          ))} */}
         </div>
-        <div className="single-category-div">
+        {/* <div className="single-category-div">
           {selectedCategory && <SingleCategory category={selectedCategory} />}
-        </div>
+        </div> */}
       </div>
     </div>
   );

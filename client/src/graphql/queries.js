@@ -39,7 +39,7 @@ export const QUERY_USER_GROUPS = gql`
 
 export const QUERY_SINGLE_GROUP = gql`
   query getSingleGroup($groupId: ID!) {
-    group(groupId: $groupId) {
+    getSingleGroup(groupId: $groupId) {
       _id
       groupName
       categories {

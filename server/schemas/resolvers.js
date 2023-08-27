@@ -63,32 +63,30 @@ const resolvers = {
       return { token, currentUser: user };
     },
     addGroup: async (parent, { groupName }, context) => {
-      if (context.user) {
-        const group = await Group.create({ groupName });
+      const group = await Group.create({ groupName });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { groups: group._id } },
-          { new: true }
-        );
+      // await User.findOneAndUpdate(
+      //   { _id: context.user._id },
+      //   { $addToSet: { groups: group._id } },
+      //   { new: true }
+      // );
 
-        return group;
-      }
+      return group;
     },
-    addUserToGroup: async (parent, { groupId, userId }, context) => {
-      if (context.user) {
-        const userToAdd = await User.findById(userId);
-        const groupToUpdate = await Group.findById(groupId);
+    addUserToGroup: async (parent, { groupId, userId }) => {
+      const userToAdd = await User.findById(userId);
+      const groupToUpdate = await Group.findById(groupId);
 
-        if (!userToAdd || !groupToUpdate) {
-          throw new Error('User or group not found.');
-        }
-
-        groupToUpdate.users.push(userToAdd._id);
-        await groupToUpdate.save();
-
-        return groupToUpdate;
+      if (!userToAdd || !groupToUpdate) {
+        throw new Error('User or group not found.');
       }
+
+      groupToUpdate.users.push(userToAdd._id);
+      await groupToUpdate.save();
+
+      const updatedGroup = await groupToUpdate.populate('users');
+
+      return updatedGroup;
     },
     addCategory: async (parent, { groupId, categoryName }, context) => {
       if (context.user) {

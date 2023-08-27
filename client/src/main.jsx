@@ -36,7 +36,7 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="groupPage/:id"
+        path="groupPage/:groupId"
         element={
           // <ProtectedRoute>
           <GroupPage />
@@ -44,7 +44,7 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="taskPage/:id"
+        path="taskPage/:taskId"
         element={
           <ProtectedRoute>
             <TaskPage />
