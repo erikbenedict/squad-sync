@@ -12,7 +12,7 @@ import {
 
 export default function SingleCategory({ category }) {
   // eslint-disable-next-line no-undef
-  const [openModal, setOpenModal] = (useState < string) | (undefined > '');
+  const [openModal, setOpenModal] = useState('');
   const [email, setEmail] = useState('');
   const props = { openModal, setOpenModal, email, setEmail };
 

@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { QUERY_SINGLE_GROUP } from '../graphql/queries';
-import SingleCategory from '../components/SingleCategory';
+import Categories from '../components/Categories';
 
 function GroupPage() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const { groupId } = useParams();
   console.log('----> GROUP ID <----', groupId);
   const { loading, data } = useQuery(QUERY_SINGLE_GROUP, {
@@ -31,25 +29,7 @@ function GroupPage() {
         </ul>
       </header>
       <div className="categories-container">
-        <div className="category-list">
-          <h2>Categories</h2>
-          {group.categories.map((category) => (
-            <div
-              key={category._id}
-              className="category-div"
-              onClick={() => setSelectedCategory(category)}
-            >
-              <h3 className="category-name">{category.categoryName}</h3>
-            </div>
-          ))}
-        </div>
-        <div className="single-category-div">
-          {
-            selectedCategory ? (
-              <SingleCategory category={selectedCategory} />
-            ) : null /* add placeholder div */
-          }
-        </div>
+        <Categories groupId={groupId} />
       </div>
     </div>
   );

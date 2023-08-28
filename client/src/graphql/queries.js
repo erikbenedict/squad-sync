@@ -25,16 +25,16 @@ export const QUERY_USER_GROUPS = gql`
   }
 `;
 
-// export const QUERY_GROUP_USERS = gql`
-//   query getGroupUsers($groupId: ID!) {
-//     groupUsers(groupId: $groupId) {
-//       _id
-//       firstName
-//       lastName
-//       email
-//     }
-//   }
-// `;
+export const QUERY_GROUP_USERS = gql`
+  query getGroupUsers($groupId: ID!) {
+    groupUsers(groupId: $groupId) {
+      _id
+      firstName
+      lastName
+      email
+    }
+  }
+`;
 
 export const QUERY_SINGLE_GROUP = gql`
   query getSingleGroup($groupId: ID!) {
@@ -56,7 +56,7 @@ export const QUERY_SINGLE_GROUP = gql`
 
 export const QUERY_GROUP_CATEGORIES = gql`
   query getGroupCategories($groupId: ID!) {
-    groupCategories(groupId: $groupId) {
+    getGroupCategories(groupId: $groupId) {
       _id
       categoryName
       tasks {
