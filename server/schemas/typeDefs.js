@@ -46,11 +46,11 @@ const typeDefs = `#graphql
   type Query {
     currentUser(email: String!): User
     getUserGroups(userId: ID!): [Group]!
-    #getGroupUsers(groupId: ID!): [User]!
+    getGroupUsers(groupId: ID!): [User]!
     getSingleGroup(groupId: ID!): Group
-    #getGroupCategories(groupId: ID!): [Category]!
+    getGroupCategories(groupId: ID!): [Category]!
     getSingleCategory(categoryId: ID!): Category
-    #getCategoryTasks(categoryId: ID!): [Task]!
+    getCategoryTasks(categoryId: ID!): [Task]!
     getSingleTask(taskId: ID!): Task
   }
 

@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-// eslint-disable-next-line import/prefer-default-export
 export const QUERY_CURRENT_USER = gql`
   query getCurrentUser($email: String!) {
     getCurrentUser(email: $email) {
@@ -55,20 +54,20 @@ export const QUERY_SINGLE_GROUP = gql`
   }
 `;
 
-// export const QUERY_GROUP_CATEGORIES = gql`
-//   query getGroupCategories($groupId: ID!) {
-//     groupCategories(groupId: $groupId) {
-//       _id
-//       categoryName
-//       tasks {
-//         _id
-//         taskName
-//         taskDescription
-//         dueDate
-//       }
-//     }
-//   }
-// `;
+export const QUERY_GROUP_CATEGORIES = gql`
+  query getGroupCategories($groupId: ID!) {
+    groupCategories(groupId: $groupId) {
+      _id
+      categoryName
+      tasks {
+        _id
+        taskName
+        taskDescription
+        dueDate
+      }
+    }
+  }
+`;
 
 export const QUERY_SINGLE_CATEGORY = gql`
   query getSingleCategory($categoryId: ID!) {
