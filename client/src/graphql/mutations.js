@@ -77,7 +77,7 @@ export const ADD_CATEGORY = gql`
         _id
         taskName
         dueDate
-        user {
+        users {
           _id
           firstName
           lastName

@@ -1,17 +1,43 @@
 import { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GROUP_CATEGORIES } from '../graphql/queries';
+import { ADD_CATEGORY } from '../graphql/mutations';
 import SingleCategory from '../components/SingleCategory';
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
 
 function Categories({ groupId }) {
   const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
+
   const [selectedCategory, setSelectedCategory] = useState(null);
+
   const { loading, data } = useQuery(QUERY_GROUP_CATEGORIES, {
     variables: { groupId },
   });
   const categories = data?.getGroupCategories;
+
+  // eslint-disable-next-line no-unused-vars
+  const [addCategory, { error }] = useMutation(ADD_CATEGORY, {
+    refetchQueries: [{ query: QUERY_GROUP_CATEGORIES, variables: { groupId } }],
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const categoryName = event.target.categoryName.value;
+
+    try {
+      await addCategory({
+        variables: {
+          groupId: groupId,
+          categoryName: categoryName,
+        },
+      });
+      setOpenModal(undefined);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -48,7 +74,7 @@ function Categories({ groupId }) {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleFormSubmit}>
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Create a new Category
             </h3>
@@ -65,7 +91,7 @@ function Categories({ groupId }) {
             <div className="w-full">
               <Button type="submit">Add Category!</Button>
             </div>
-          </div>
+          </form>
         </Modal.Body>
       </Modal>
     </div>

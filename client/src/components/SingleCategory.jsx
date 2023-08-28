@@ -18,7 +18,7 @@ export default function SingleCategory({ category }) {
 
   return (
     <div className="single-category-container">
-      <h3 className="single-category-title">{category.categoryName} Tasks</h3>
+      {/* <h3 className="single-category-title">{category.categoryName} Tasks</h3>
       <ListGroup className="task-list">
         {category.tasks.map((task) => (
           <ListGroup.Item
@@ -30,7 +30,7 @@ export default function SingleCategory({ category }) {
             </Link>
           </ListGroup.Item>
         ))}
-      </ListGroup>
+      </ListGroup> */}
 
       {/* <---- Modal ----> */}
       <Button onClick={() => props.setOpenModal('form-elements')}>
@@ -77,9 +77,9 @@ export default function SingleCategory({ category }) {
                 />
               </div>
               <Select id="priority" required>
-                <option>High</option>
-                <option>Medium</option>
                 <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
               </Select>
             </div>
 

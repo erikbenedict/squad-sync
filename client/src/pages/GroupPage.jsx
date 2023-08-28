@@ -5,13 +5,10 @@ import Categories from '../components/Categories';
 
 function GroupPage() {
   const { groupId } = useParams();
-  console.log('----> GROUP ID <----', groupId);
   const { loading, data } = useQuery(QUERY_SINGLE_GROUP, {
     variables: { groupId },
   });
   const group = data?.getSingleGroup || {};
-  console.log('-----> DATA <-----', data);
-  console.log('-----> GROUP <-----', group);
 
   if (loading) return <p>Loading...</p>;
 
