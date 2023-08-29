@@ -3,7 +3,7 @@ const { signToken, AuthenticationError } = require('../utils');
 
 const resolvers = {
   Query: {
-    currentUser: async (parent, { email }) => User.findOne({ email }),
+    getCurrentUser: async (parent, { userId }) => User.findOne({ _id:userId }),
     getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
       
@@ -60,23 +60,29 @@ const resolvers = {
 
       return { token, currentUser: user };
     },
-    addGroup: async (parent, { groupName }, context) => {
-      if (context.user) {
-        const group = await Group.create({ groupName });
-
+    addGroup: async (parent, { groupName, userId }) => {
+      const group = await Group.create({ groupName });
+      // if (context.user) {
         await User.findOneAndUpdate(
-          { _id: context.user._id },
+          { _id: userId },
           { $addToSet: { groups: group._id } },
           { new: true }
         );
 
+        await Group.findOneAndUpdate(
+          { groupName },
+          { $addToSet: { users: userId } },
+          { new: true }
+        );
+
         return group;
-      }
-      throw AuthenticationError('You need to be logged in!');
+      // }
+      // return group;
+      // throw new AuthenticationError('You need to be logged in!');
     },
-    addUserToGroup: async (parent, {groupId, userId}, context) => {
-      if(context.user) {
-        const userToAdd = await User.findById(userId);
+    addUserToGroup: async (parent, {groupId, userId}) => {
+      // if(context.user) {
+      const userToAdd = await User.findById(userId);
       const groupToUpdate = await Group.findById(groupId);
 
       if (!userToAdd || !groupToUpdate) {
@@ -87,11 +93,11 @@ const resolvers = {
       await groupToUpdate.save();
 
       return groupToUpdate;
-      }
-      throw new AuthenticationError('You must be logged in to add a user to a group.');
+      // }
+      // throw new AuthenticationError('You must be logged in to add a user to a group.');
     },
-    addCategory: async (parent, { groupId, categoryName }, context) => {
-      if (context.user) {
+    addCategory: async (parent, { groupId, categoryName }) => {
+      // if (context.user) {
         const category = await Category.create({ categoryName });
 
         await Group.findOneAndUpdate(
@@ -101,8 +107,8 @@ const resolvers = {
         );
 
         return category;
-      }
-      throw new AuthenticationError('You must be logged in to add a category.');
+      // }
+      // throw new AuthenticationError('You must be logged in to add a category.');
     },
     addTask: async (
       parent,

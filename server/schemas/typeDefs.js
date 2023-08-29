@@ -44,7 +44,7 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    currentUser(email: String!): User
+    getCurrentUser(userId: ID!): User
     getUserGroups(userId: ID!): [Group]!
     #getGroupUsers(groupId: ID!): [User]!
     getSingleGroup(groupId: ID!): Group
@@ -57,7 +57,7 @@ const typeDefs = `#graphql
   type Mutation {
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addGroup(groupName: String!): Group
+    addGroup(groupName: String!, userId: ID!): Group
     addUserToGroup(groupId: ID!, userId: ID!): Group
     addCategory(groupId: ID!, categoryName: String!): Category
     addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID!): Task

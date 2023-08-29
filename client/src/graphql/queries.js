@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 
 // eslint-disable-next-line import/prefer-default-export
 export const QUERY_CURRENT_USER = gql`
-  query getCurrentUser($email: String!) {
-    currentUser(email: $email) {
+  query getCurrentUser($userId: ID!) {
+    getCurrentUser(userId: $userId) {
       _id
       email
       firstName
@@ -14,7 +14,7 @@ export const QUERY_CURRENT_USER = gql`
 
 export const QUERY_USER_GROUPS = gql`
   query getUserGroups($userId: ID!) {
-    userGroups(userId: $userId) {
+    getUserGroups(userId: $userId) {
       _id
       groupName
       users {
