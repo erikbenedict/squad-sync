@@ -1,3 +1,4 @@
+// mutations.js
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
@@ -37,8 +38,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const ADD_GROUP = gql`
-  mutation addGroup($groupName: String!) {
-    addGroup(groupName: $groupName) {
+  mutation addGroup($groupName: String!, $userId: ID!) {
+    addGroup(groupName: $groupName, userId: $userId) {
       _id
       groupName
       categories {

@@ -60,19 +60,22 @@ const resolvers = {
 
       return { token, currentUser: user };
     },
-    addGroup: async (parent, { groupName }, context) => {
-      if (context.user) {
-        const group = await Group.create({ groupName });
-
+    addGroup: async (parent, { groupName, userId }) => {
+      const group = await Group.create({ groupName });
+      // if (context.user) {
         await User.findOneAndUpdate(
-          { _id: context.user._id },
+          { _id: userId },
           { $addToSet: { groups: group._id } },
           { new: true }
         );
 
-        return group;
-      }
-      throw AuthenticationError('You need to be logged in!');
+        await Group.findOneAndUpdate(
+          { groupName },
+          { $addToSet: { users: userId } },
+          { new: true }
+        );
+
+        return group; 
     },
     addUserToGroup: async (parent, {groupId, userId}, context) => {
       if(context.user) {

@@ -1,14 +1,16 @@
-[
-  {
-    "firstName": "Steve",
-    "lastName": "Rogers",
-    "email": "captainamerica@example.com",
-    "password": "passwords1"
-  },
-  {
-    "firstName": "Carol",
-    "lastName": "Danvers",
-    "email": "captainmarvel@example.com",
-    "password": "passwords1"
-  }
-]
+{
+  "users": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johndoe@example.com",
+      "password": "hashedpassword123"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "janesmith@example.com",
+      "password": "hashedpassword456"
+    }
+  ]
+}

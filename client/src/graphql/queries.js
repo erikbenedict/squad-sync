@@ -1,6 +1,6 @@
+//queries.js
 import { gql } from '@apollo/client';
 
-// eslint-disable-next-line import/prefer-default-export
 export const QUERY_CURRENT_USER = gql`
   query getCurrentUser($email: String!) {
     currentUser(email: $email) {
@@ -14,7 +14,7 @@ export const QUERY_CURRENT_USER = gql`
 
 export const QUERY_USER_GROUPS = gql`
   query getUserGroups($userId: ID!) {
-    userGroups(userId: $userId) {
+    getUserGroups(userId: $userId) {
       _id
       groupName
       users {
@@ -126,3 +126,31 @@ export const QUERY_SINGLE_TASK = gql`
     }
   }
 `;
+
+
+// export const QUERY_SEARCH_TASKS = gql`
+//   query searchTasks($searchQuery: String!, $groupIds: [ID!]!) {
+//     searchTasks(searchQuery: $searchQuery, groupIds: $groupIds) {
+//       _id
+//       taskName
+//       taskDescription
+//       dueDate
+//       priority
+//       users {
+//         _id
+//         firstName
+//         lastName
+//       }
+//       comments {
+//         _id
+//         commentText
+//         commentAuthor
+//         createdAt
+//       }
+//       category {
+//         _id
+//         categoryName
+//       }
+//     }
+//   }
+// `;
