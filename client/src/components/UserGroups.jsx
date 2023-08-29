@@ -8,7 +8,6 @@ import { useCurrentUserContext } from "../context/CurrentUser";
 
 function UserGroups() {
   const { currentUser } = useCurrentUserContext();
-  console.log(currentUser._id);
   const { loading, error, data } = useQuery(QUERY_USER_GROUPS, {
     variables: { userId: currentUser._id },
     onError: (err) => {
@@ -46,15 +45,15 @@ function UserGroups() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>There has been an error, please try again.</p>;
   if (mutationError)
-    return <p>Error creating group: {mutationError.message}</p>;
+    return <p>Error creating group, please try again.</p>;
 
   return (
     <>
       <div className="grid grid-cols-1 gap-10 mt-10 mb-10 place-content-stretch md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:mt-20 2xl:mb-20">
         {userGroups.map((group) => (
-          <Link key={group._id} className="">
+          <Link key={group._id}>
             <Card className="shadow-2xl hover:bg-gray-200">
               <h5 className="flex items-center justify-center flex-grow text-lg font-bold tracking-tight text-gray-900 md:text-xl xl:text-2xl 2xl:text-3xl dark:text-white">
                 <p>{group.groupName}</p>

@@ -1,10 +1,8 @@
 import UserGroups from "../components/UserGroups";
 import { useCurrentUserContext } from "../context/CurrentUser";
-// import { useEffect } from "react";
 
 function Dashboard() {
   const { currentUser } = useCurrentUserContext();
-  console.log("currentUser from context>>>>>", currentUser);
 
   return (
     <div className="h-screen p-6 bg-gray-50 dark:bg-slate-800">
