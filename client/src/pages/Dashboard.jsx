@@ -1,17 +1,19 @@
 import UserGroups from "../components/UserGroups";
 import { useCurrentUserContext } from "../context/CurrentUser";
+// import { useEffect } from "react";
 
 function Dashboard() {
   const { currentUser } = useCurrentUserContext();
+  console.log("currentUser from context>>>>>", currentUser);
 
   return (
-    <div className="h-screen p-6 bg-green-400">
-      <h1 className="mb-8 text-xl lg:text-4xl">
+    <div className="h-screen p-6 bg-gray-50 dark:bg-slate-800">
+      <h1 className="mb-8 text-3xl font-semibold text-center md:text-left md:text-4xl 2xl:text-5xl 2xl:mt-8 dark:text-white">
         Welcome, {currentUser.firstName}!
       </h1>
-      <div className="p-8 bg-green-100 h-fit md:container md:mx-auto">
+      <div className="w-11/12 p-8 mx-auto bg-blue-400 2xl:mt-20 h-fit dark:bg-slate-500">
         <div>
-          <h1 className="text-3xl text-center">Your Groups</h1>
+          <h1 className="text-2xl font-semibold text-center md:text-3xl 2xl:text-4xl dark:text-white">Your Groups</h1>
         </div>
         <UserGroups />
       </div>
