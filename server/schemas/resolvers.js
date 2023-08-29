@@ -3,7 +3,7 @@ const { signToken, AuthenticationError } = require('../utils');
 
 const resolvers = {
   Query: {
-    currentUser: async (parent, { email }) => User.findOne({ email }),
+    getSingleUser: async (parent, { email }) => User.findOne({ email }),
 
     getUserGroups: async (parent, { userId }) => {
       const userGroups = await User.findOne({ _id: userId }).populate('groups');
@@ -15,13 +15,6 @@ const resolvers = {
       const group = await Group.findOne({ _id: groupId }).populate('users');
       return group;
     },
-    // getGroupUsers: async (parent, { groupId }) => {
-    //   const groupUsers = await Group.findOne({ _id: groupId }).populate(
-    //     'users'
-    //   );
-
-    //   return groupUsers.users;
-    // },
 
     getSingleCategory: async (parent, { categoryId }) =>
       Category.findOne({ _id: categoryId }),
@@ -35,13 +28,14 @@ const resolvers = {
     },
 
     getSingleTask: async (parent, { taskId }) => Task.findOne({ _id: taskId }),
-    getCategoryTasks: async (parent, { categoryId }) => {
-      const categoryTasks = await Category.findOne({
-        _id: categoryId,
-      }).populate('tasks');
 
-      return categoryTasks.tasks;
-    },
+    // getCategoryTasks: async (parent, { categoryId }) => {
+    //   const categoryTasks = await Category.findOne({
+    //     _id: categoryId,
+    //   }).populate('tasks');
+
+    //   return categoryTasks.tasks;
+    // },
   },
 
   Mutation: {
@@ -69,15 +63,18 @@ const resolvers = {
       return { token, currentUser: user };
     },
 
-    addGroup: async (parent, { groupName }, context) => {
+    addGroup: async (parent, { groupName, userId }) => {
       const group = await Group.create({ groupName });
-
       await User.findOneAndUpdate(
-        { _id: context.user._id },
+        { _id: userId },
         { $addToSet: { groups: group._id } },
         { new: true }
       );
-
+      await Group.findOneAndUpdate(
+        { groupName },
+        { $addToSet: { users: userId } },
+        { new: true }
+      );
       return group;
     },
 
@@ -156,18 +153,20 @@ const resolvers = {
         }
       ),
 
-    updateGroup: async (parent, { groupId, groupName }) => {
-      const groupToUpdate = await Group.findById(groupId);
-      if (!groupToUpdate) {
-        throw new Error('Group not found.');
-      }
+    // updateGroup: async (parent, { groupId, groupName }) => {
+    //   const groupToUpdate = await Group.findById(groupId);
+    //   if (!groupToUpdate) {
+    //     throw new Error('Group not found.');
+    //   }
 
-      groupToUpdate.groupName = groupName;
-      await groupToUpdate.save();
+    //   groupToUpdate.groupName = groupName;
+    //   await groupToUpdate.save();
 
-      return groupToUpdate;
-    },
+    //   return groupToUpdate;
+    // },
 
+    //   throw new AuthenticationError('You must be logged in to update a group.');
+    // },
     updateCategory: async (parent, { categoryId, categoryName }) => {
       const categoryToUpdate = await Category.findById(categoryId);
       if (!categoryToUpdate) {

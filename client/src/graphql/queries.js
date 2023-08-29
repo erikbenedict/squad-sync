@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_CURRENT_USER = gql`
-  query getCurrentUser($email: String!) {
-    getCurrentUser(email: $email) {
+export const QUERY_SINGLE_USER = gql`
+  query getSingleUser($email: String!) {
+    getSingleUser(email: $email) {
       _id
       email
       firstName
@@ -21,17 +21,6 @@ export const QUERY_USER_GROUPS = gql`
         firstName
         lastName
       }
-    }
-  }
-`;
-
-export const QUERY_GROUP_USERS = gql`
-  query getGroupUsers($groupId: ID!) {
-    groupUsers(groupId: $groupId) {
-      _id
-      firstName
-      lastName
-      email
     }
   }
 `;

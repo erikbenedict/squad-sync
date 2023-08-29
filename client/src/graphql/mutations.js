@@ -37,8 +37,8 @@ export const REGISTER_USER = gql`
 `;
 
 export const ADD_GROUP = gql`
-  mutation addGroup($groupName: String!) {
-    addGroup(groupName: $groupName) {
+  mutation addGroup($groupName: String!, $userId: ID!) {
+    addGroup(groupName: $groupName, userId: $userId) {
       _id
       groupName
       categories {
@@ -94,7 +94,7 @@ export const ADD_TASK = gql`
     $taskDescription: String
     $dueDate: Date
     $priority: String!
-    $assignedUserId: ID!
+    $assignedUserId: ID
   ) {
     addTask(
       categoryId: $categoryId
@@ -135,23 +135,23 @@ export const ADD_COMMENT = gql`
   }
 `;
 
-export const UPDATE_GROUP = gql`
-  mutation updatedGroup($groupId: ID!, $groupName: String!) {
-    updateGroup(groupId: $groupId, groupName: $groupName) {
-      _id
-      groupName
-      categories {
-        _id
-        categoryName
-      }
-      users {
-        _id
-        firstName
-        lastName
-      }
-    }
-  }
-`;
+// export const UPDATE_GROUP = gql`
+//   mutation updatedGroup($groupId: ID!, $groupName: String!) {
+//     updateGroup(groupId: $groupId, groupName: $groupName) {
+//       _id
+//       groupName
+//       categories {
+//         _id
+//         categoryName
+//       }
+//       users {
+//         _id
+//         firstName
+//         lastName
+//       }
+//     }
+//   }
+// `;
 
 export const UPDATE_CATEGORY = gql`
   mutation updateCategory($categoryId: ID!, $categoryName: String!) {
