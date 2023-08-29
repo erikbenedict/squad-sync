@@ -54,10 +54,7 @@ function UserGroups() {
     <>
       <div className="grid grid-cols-1 gap-10 mt-10 mb-10 place-content-stretch md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:mt-20 2xl:mb-20">
         {userGroups.map((group) => (
-          <Link
-            key={group._id}
-            className=""
-          >
+          <Link key={group._id} className="">
             <Card className="shadow-2xl hover:bg-gray-200">
               <h5 className="flex items-center justify-center flex-grow text-lg font-bold tracking-tight text-gray-900 md:text-xl xl:text-2xl 2xl:text-3xl dark:text-white">
                 <p>{group.groupName}</p>
@@ -67,7 +64,10 @@ function UserGroups() {
         ))}
       </div>
       <div className="flex flex-col items-center">
-        <Button onClick={() => props.setOpenModal("form-elements")} color="dark">
+        <Button
+          onClick={() => props.setOpenModal("form-elements")}
+          color="dark"
+        >
           <i className="pr-2 fa-solid fa-plus"></i>+ Create Group
         </Button>
         <Modal
@@ -93,7 +93,9 @@ function UserGroups() {
                 />
               </div>
               <div className="w-full">
-                <Button type="submit" color="dark">Create Group!</Button>
+                <Button type="submit" color="dark">
+                  Create Group!
+                </Button>
               </div>
             </form>
           </Modal.Body>
