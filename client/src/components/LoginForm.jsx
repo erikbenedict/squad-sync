@@ -45,7 +45,8 @@ export default function Login() {
           <p className="error-text">The provided credentials are incorrect</p>
         </div>
       ) : null}
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center min-h-screen dark:text-white bg-gray-100 dark:bg-gray-900">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-md w-full max-w-md">
       <form id="login-form " onSubmit={handleFormSubmit}>
         <h2>Login</h2>
         <label htmlFor="email">
@@ -68,7 +69,7 @@ export default function Login() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">
+        <button type="submit btn btn-primary px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
           Login
         </button>
         <p>
@@ -77,6 +78,7 @@ export default function Login() {
           <Link to="/register">here</Link>
         </p>
       </form>
+      </div>
       </div>
     </>
   );

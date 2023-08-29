@@ -42,7 +42,7 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-white">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-6">Register</h2>
         <form id="registration-form" onSubmit={handleFormSubmit}>
