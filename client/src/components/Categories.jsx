@@ -21,7 +21,7 @@ function Categories({ groupId }) {
     refetchQueries: [{ query: QUERY_GROUP_CATEGORIES, variables: { groupId } }],
   });
 
-  const handleFormSubmit = async (event) => {
+  const handleCategoryFormSubmit = async (event) => {
     event.preventDefault();
 
     const categoryName = event.target.categoryName.value;
@@ -44,11 +44,11 @@ function Categories({ groupId }) {
   return (
     <div className="categories-container">
       <div className="category-list">
-        <h2>Categories</h2>
+        <h2 className="text-center text-2xl font-bold">Categories</h2>
         {categories.map((category) => (
           <div
             key={category._id}
-            className="category-div"
+            className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3  "
             onClick={() => setSelectedCategory(category)}
           >
             <h3 className="category-name">{category.categoryName}</h3>
@@ -74,7 +74,7 @@ function Categories({ groupId }) {
       >
         <Modal.Header />
         <Modal.Body>
-          <form className="space-y-6" onSubmit={handleFormSubmit}>
+          <form className="space-y-6" onSubmit={handleCategoryFormSubmit}>
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Create a new Category
             </h3>

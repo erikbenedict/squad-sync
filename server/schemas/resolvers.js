@@ -78,16 +78,17 @@ const resolvers = {
       return group;
     },
 
-    addUserToGroup: async (parent, { groupId, userId }) => {
-      const userToAdd = await User.findById(userId);
-      const groupToUpdate = await Group.findById(groupId);
-
-      if (!userToAdd || !groupToUpdate) {
-        throw new Error('User or group not found.');
-      }
-
-      groupToUpdate.users.push(userToAdd._id);
-      await groupToUpdate.save();
+    addUserToGroup: async (parent, { groupId, email }) => {
+      const userToAdd = await User.findOneAndUpdate(
+        { email },
+        { $addToSet: { groups: groupId } },
+        { new: true }
+      );
+      const groupToUpdate = await Group.findByIdAndUpdate(
+        groupId,
+        { $addToSet: { users: userToAdd._id } },
+        { new: true }
+      );
 
       const updatedGroup = await groupToUpdate.populate('users');
 
@@ -206,11 +207,34 @@ const resolvers = {
     },
 
     removeGroup: async (parent, { groupId }) => {
-      const group = await Group.findOneAndDelete({
-        _id: groupId,
-      });
+      try {
+        const groupToDelete = await Group.findById(groupId);
 
-      return group;
+        if (!groupToDelete) {
+          throw new Error('Group not found.');
+        }
+
+        const usersInGroup = await User.find({
+          _id: { $in: groupToDelete.users },
+        });
+
+        const updateUserPromises = usersInGroup.map(async (user) => {
+          user.groups.pull(groupId);
+          return user.save();
+        });
+
+        await Promise.all(updateUserPromises);
+
+        const categoriesToDelete = groupToDelete.categories;
+        await Category.deleteMany({ _id: { $in: categoriesToDelete } });
+
+        await Group.findByIdAndDelete(groupId);
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
     },
 
     removeUserFromGroup: async (parent, { userId, groupId }) => {

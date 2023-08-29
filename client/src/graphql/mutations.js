@@ -55,8 +55,8 @@ export const ADD_GROUP = gql`
 `;
 
 export const ADD_USER_TO_GROUP = gql`
-  mutation addUserToGroup($groupId: ID!, $userId: ID!) {
-    addUserToGroup(groupId: $groupId, userId: $userId) {
+  mutation addUserToGroup($groupId: ID!, $email: String!) {
+    addUserToGroup(groupId: $groupId, email: $email) {
       _id
       groupName
       users {
