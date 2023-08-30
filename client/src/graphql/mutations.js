@@ -90,11 +90,10 @@ export const ADD_CATEGORY = gql`
 export const ADD_TASK = gql`
   mutation addTask(
     $categoryId: ID!
-    $taskName: String!
+    $taskName: String
     $taskDescription: String
-    $dueDate: Date
-    $priority: String!
-    $assignedUserId: ID
+    $dueDate: String
+    $priority: String
   ) {
     addTask(
       categoryId: $categoryId
@@ -102,7 +101,6 @@ export const ADD_TASK = gql`
       taskDescription: $taskDescription
       dueDate: $dueDate
       priority: $priority
-      assignedUserId: $assignedUserId
     ) {
       _id
       taskName

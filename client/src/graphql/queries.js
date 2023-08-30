@@ -53,6 +53,18 @@ export const QUERY_GROUP_CATEGORIES = gql`
         taskName
         taskDescription
         dueDate
+        priority
+        users {
+          _id
+          firstName
+          lastName
+        }
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
     }
   }
@@ -65,6 +77,7 @@ export const QUERY_SINGLE_CATEGORY = gql`
       categoryName
       tasks {
         taskName
+        taskDescription
         dueDate
         priority
         users {

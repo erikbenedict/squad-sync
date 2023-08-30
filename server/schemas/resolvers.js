@@ -107,25 +107,57 @@ const resolvers = {
       return category;
     },
 
+    // addTask: async (
+    //   parent,
+    //   {
+    //     categoryId,
+    //     taskName,
+    //     taskDescription,
+    //     dueDate,
+    //     priority,
+    //     assignedUserId,
+    //   }
+    // ) => {
+    //   const taskData = {
+    //     taskName,
+    //     taskDescription,
+    //     dueDate,
+    //     priority,
+    //     users: [],
+    //   };
+
+    //   let user;
+
+    //   if (assignedUserId) {
+    //     user = await User.findById(assignedUserId);
+    //     taskData.users.push(user._id);
+    //   }
+
+    //   const task = await Task.create(taskData);
+
+    //   await Category.findOneAndUpdate(
+    //     { _id: categoryId },
+    //     { $addToSet: { tasks: task._id } },
+    //     { new: true }
+    //   );
+
+    //   if (assignedUserId) {
+    //     user.tasks.push(task._id);
+    //     await user.save();
+    //   }
+
+    //   return task;
+    // },
+
     addTask: async (
       parent,
-      {
-        categoryId,
-        taskName,
-        taskDescription,
-        dueDate,
-        priority,
-        assignedUserId,
-      }
+      { categoryId, taskName, taskDescription, dueDate, priority }
     ) => {
-      const user = await User.findById(assignedUserId);
-
       const task = await Task.create({
         taskName,
         taskDescription,
         dueDate,
         priority,
-        users: [user._id],
       });
 
       await Category.findOneAndUpdate(
@@ -133,9 +165,6 @@ const resolvers = {
         { $addToSet: { tasks: task._id } },
         { new: true }
       );
-
-      user.tasks.push(task._id);
-      await user.save();
 
       return task;
     },

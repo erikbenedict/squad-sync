@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-// import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-// import { Link } from 'react-router-dom';
 import { ADD_TASK } from '../graphql/mutations';
 import {
   ListGroup,
@@ -17,17 +14,25 @@ import {
 export default function SingleCategory({ category }) {
   const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
-  // const [startDate, setStartDate] = useState(new Date());
 
   const [addTask] = useMutation(ADD_TASK);
 
   const handleTaskFormSubmit = async (event) => {
     event.preventDefault();
+
     const categoryId = category._id;
     const taskName = event.target.taskName.value;
     const taskDescription = event.target.taskDescription.value;
-    const dueDate = event.target.dueDate.value;
     const priority = event.target.priority.value;
+    const dueDate = event.target.dueDate.value;
+
+    console.log('-----> Form Values <-----', {
+      categoryId,
+      taskName,
+      taskDescription,
+      priority,
+      dueDate,
+    });
 
     try {
       await addTask({
@@ -61,12 +66,12 @@ export default function SingleCategory({ category }) {
           category.tasks.map((task) => (
             <ListGroup.Item
               key={task._id}
-              className={`task-item bg-slate-400 border-2 rounded-lg border-solid border-slate-300 ${getPriorityClass(
+              className={`bg-slate-400 border-2 rounded-lg border-solid border-slate-300 ${getPriorityClass(
                 task.priority
               )}`}
               href={`/taskPage/${task._id}`}
             >
-              {task.taskName} - {task.dueDate} - {task.users}
+              {`${task.taskName} - ${task.dueDate}`}
             </ListGroup.Item>
           ))
         )}
@@ -122,7 +127,17 @@ export default function SingleCategory({ category }) {
                 <option>High</option>
               </Select>
             </div>
-
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="dueDate" value="Select a due date (if any)" />
+              </div>
+              <TextInput
+                type="text"
+                id="dueDate"
+                placeholder="MM/dd/yyyy"
+                pattern="\d{2}/\d{2}/\d{4}"
+              />
+            </div>
             <div className="w-full">
               <Button type="submit">Add task!</Button>
             </div>
