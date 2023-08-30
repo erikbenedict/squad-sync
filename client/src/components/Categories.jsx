@@ -16,8 +16,7 @@ function Categories({ groupId }) {
   });
   const categories = data?.getGroupCategories;
 
-  // eslint-disable-next-line no-unused-vars
-  const [addCategory, { error }] = useMutation(ADD_CATEGORY, {
+  const [addCategory] = useMutation(ADD_CATEGORY, {
     refetchQueries: [{ query: QUERY_GROUP_CATEGORIES, variables: { groupId } }],
   });
 
@@ -43,25 +42,34 @@ function Categories({ groupId }) {
 
   return (
     <div className="categories-container">
-      <div className="category-list">
-        <h2 className="text-center text-2xl font-bold">Categories</h2>
-        {categories.map((category) => (
-          <div
-            key={category._id}
-            className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3  "
-            onClick={() => setSelectedCategory(category)}
-          >
-            <h3 className="category-name">{category.categoryName}</h3>
-          </div>
-        ))}
+      <div className="flex">
+        <div className="category-list w-1/2 p-2">
+          <h2 className="text-center text-2xl font-semibold mb-2">
+            Categories
+          </h2>
+          {categories.map((category) => (
+            <div
+              key={category._id}
+              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3  "
+              onClick={() => setSelectedCategory(category)}
+            >
+              <h3 className="category-name">{category.categoryName}</h3>
+            </div>
+          ))}
+        </div>
+        <div
+          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 ${
+            selectedCategory ? '' : 'hidden'
+          }`}
+        >
+          {
+            selectedCategory ? (
+              <SingleCategory category={selectedCategory} />
+            ) : null /* add placeholder div */
+          }
+        </div>
       </div>
-      <div className="single-category-div">
-        {
-          selectedCategory ? (
-            <SingleCategory category={selectedCategory} />
-          ) : null /* add placeholder div */
-        }
-      </div>
+
       {/* <---- Modal ----> */}
       <Button onClick={() => props.setOpenModal('form-elements')}>
         <i className="fa-solid fa-plus pr-2"></i>Category

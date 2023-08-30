@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+// import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+// import { Link } from 'react-router-dom';
+import { ADD_TASK } from '../graphql/mutations';
 import {
   ListGroup,
   Button,
@@ -11,26 +15,62 @@ import {
 } from 'flowbite-react';
 
 export default function SingleCategory({ category }) {
-  // eslint-disable-next-line no-undef
   const [openModal, setOpenModal] = useState('');
-  const [email, setEmail] = useState('');
-  const props = { openModal, setOpenModal, email, setEmail };
+  const props = { openModal, setOpenModal };
+  // const [startDate, setStartDate] = useState(new Date());
+
+  const [addTask] = useMutation(ADD_TASK);
+
+  const handleTaskFormSubmit = async (event) => {
+    event.preventDefault();
+    const categoryId = category._id;
+    const taskName = event.target.taskName.value;
+    const taskDescription = event.target.taskDescription.value;
+    const dueDate = event.target.dueDate.value;
+    const priority = event.target.priority.value;
+
+    try {
+      await addTask({
+        variables: {
+          categoryId: categoryId,
+          taskName: taskName,
+          taskDescription: taskDescription,
+          dueDate: dueDate,
+          priority: priority,
+        },
+      });
+      props.setOpenModal(undefined);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="single-category-container">
-      {/* <h3 className="single-category-title">{category.categoryName} Tasks</h3>
-      <ListGroup className="task-list">
-        {category.tasks.map((task) => (
-          <ListGroup.Item
-            key={task._id}
-            className={`task-item ${getPriorityClass(task.priority)}`}
-          >
-            <Link to={`/taskPage/${task._id}`}>
-              {task.taskName} - {task.dueDate} - {task.users}
-            </Link>
+      <div className="border-4 rounded-lg border-solid border-slate-300 w-full flex justify-center items-center mb-3 p-2">
+        <h3 className="single-category-title text-xl font-medium">
+          {category.categoryName} Tasks
+        </h3>
+      </div>
+      <ListGroup className="task-list mb-2">
+        {category.tasks.length === 0 ? (
+          <ListGroup.Item className=" bg-slate-400 border-2 rounded-lg border-solid border-slate-300">
+            Add a task to get started!
           </ListGroup.Item>
-        ))}
-      </ListGroup> */}
+        ) : (
+          category.tasks.map((task) => (
+            <ListGroup.Item
+              key={task._id}
+              className={`task-item bg-slate-400 border-2 rounded-lg border-solid border-slate-300 ${getPriorityClass(
+                task.priority
+              )}`}
+              href={`/taskPage/${task._id}`}
+            >
+              {task.taskName} - {task.dueDate} - {task.users}
+            </ListGroup.Item>
+          ))
+        )}
+      </ListGroup>
 
       {/* <---- Modal ----> */}
       <Button onClick={() => props.setOpenModal('form-elements')}>
@@ -44,7 +84,7 @@ export default function SingleCategory({ category }) {
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleTaskFormSubmit}>
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Create a new task
             </h3>
@@ -86,7 +126,7 @@ export default function SingleCategory({ category }) {
             <div className="w-full">
               <Button type="submit">Add task!</Button>
             </div>
-          </div>
+          </form>
         </Modal.Body>
       </Modal>
     </div>
