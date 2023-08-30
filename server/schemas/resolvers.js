@@ -1,3 +1,4 @@
+// resolvers.js
 const { User, Group, Category, Task } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
 
@@ -93,8 +94,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You must be logged in to add a user to a group.');
     },
-    addCategory: async (parent, { groupId, categoryName }, context) => {
-      if (context.user) {
+    addCategory: async (parent, { groupId, categoryName }) => {
         const category = await Category.create({ categoryName });
 
         await Group.findOneAndUpdate(
@@ -104,13 +104,11 @@ const resolvers = {
         );
 
         return category;
-      }
-      throw new AuthenticationError('You must be logged in to add a category.');
+      
     },
     addTask: async (
       parent,
-      { categoryId, taskName, taskDescription, dueDate, priority, assignedUserId },
-      context
+      { categoryId, taskName, taskDescription, dueDate, priority, assignedUserId }
     ) => {
       if (context.user) {
         const user = await User.findById(assignedUserId);

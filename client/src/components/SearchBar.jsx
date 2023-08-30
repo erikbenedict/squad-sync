@@ -18,16 +18,18 @@ function TaskSearch() {
     if (!data) {
       return; // Data is not yet available, do not proceed
     }
-
+  
     const newFilteredTasks = [];
-
+  
+    // Check if the keyword is empty before proceeding with the search
+    if (!keyword.trim()) {
+      setFilteredTasks(newFilteredTasks);
+      return; // No need to perform search for an empty keyword
+    }
+  
     // Iterate through each group and its categories
     data.userGroups.forEach((group) => {
-      console.log('Group:', group);
-
       group.categories.forEach((category) => {
-        console.log('Category:', category);
-
         // Filter tasks for each category based on search keyword
         const filteredCategoryTasks = category.tasks.filter((task) =>
           task.taskName.includes(keyword)
@@ -36,7 +38,7 @@ function TaskSearch() {
         newFilteredTasks.push(...filteredCategoryTasks);
       });
     });
-
+  
     setFilteredTasks(newFilteredTasks);
   };
 

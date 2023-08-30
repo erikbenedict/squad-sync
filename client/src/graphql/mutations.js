@@ -95,7 +95,7 @@ export const ADD_TASK = gql`
     $taskDescription: String
     $dueDate: Date
     $priority: String!
-    $assignedUserId: ID!
+    $assignedUserId: ID
   ) {
     addTask(
       categoryId: $categoryId

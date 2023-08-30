@@ -2,9 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCurrentUserContext } from '../context/CurrentUser';
 import DarkModeToggle from "./DarkModeToggle";
+import { Collapse } from 'flowbite';
 
 function Header() {
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
+
+  // Initialize the Collapse object
+  const collapse = new Collapse({
+    targetEl: document.getElementById('navbar-default'),
+    triggerEl: document.getElementById('navbar-toggle-button'),
+  });
 
   return (
     <nav className="border-gray-200 bg-gray-50 dark:bg-gray-800">
@@ -13,11 +20,10 @@ function Header() {
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SquadSync</span>
         </a>
-        <br></br><br></br>
-        <DarkModeToggle/>
-        <br></br><br></br>
+       
         <button
-          data-collapse-toggle="navbar-default "
+          id="navbar-toggle-button"
+          data-collapse-toggle="navbar-default"
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 
           rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 
@@ -46,6 +52,9 @@ function Header() {
                   hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white 
                   md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</button>
                 </li>
+               
+        <DarkModeToggle/>
+        
               </>
             ) : (
               <>
@@ -61,6 +70,7 @@ function Header() {
                    md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white 
                    md:dark:hover:bg-transparent">Sign Up</Link>
                 </li>
+                <DarkModeToggle/>
               </>
             )}
           </ul>

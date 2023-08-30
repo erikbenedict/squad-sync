@@ -1,3 +1,4 @@
+// typeDefs.js
 const typeDefs = `#graphql
   type User {
     _id: ID
@@ -60,7 +61,7 @@ const typeDefs = `#graphql
     addGroup(groupName: String!, userId: ID!): Group
     addUserToGroup(groupId: ID!, userId: ID!): Group
     addCategory(groupId: ID!, categoryName: String!): Category
-    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID!): Task
+    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID): Task
     addComment(taskId: ID!, commentText: String!): Task
     updateGroup(groupId: ID!, groupName: String!): Group
     updateCategory(categoryId: ID!, categoryName: String!): Category
