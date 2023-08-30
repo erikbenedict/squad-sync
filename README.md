@@ -2,7 +2,7 @@
 ![license](https://img.shields.io/badge/License-MIT-yellowgreen)
 ## Description
 
-SquadSync introduces an innovative application designed to effortlessly manage your tasks and lists. Drawing inspiration from the concept of a "HoneyDo" list, users can establish their accounts to meticulously organize their diverse lists. Seamlessly centralizing these lists within your account, SquadSync offers a comprehensive solution.
+SquadSync introduces an innovative application designed to effortlessly manage your tasks and lists. Drawing inspiration from the concept of a "HoneyDo" list, users can establish their accounts to meticulously organize their diverse lists. By incorporating technologies such as GraphQL, React, MongoDB and Tailwind to name a few, the app seamlessly centralizes these lists within your account and offers a comprehensive solution.
 
 One of the standout features of SquadSync is its collaborative nature. Users can readily invite multiple participants to contribute to their individual lists, transcending the boundaries of solo task management. Imagine planning a bachelor party, where diverse contributors can collectively curate the perfect event by collaboratively adding and refining tasks. This synergy extends further as tasks can be allocated a priority status, portraying their significance within the grand scheme of things.
 
@@ -38,9 +38,9 @@ Download and install the Node.js LTS version from [Node.js](https://nodejs.org/e
 1. Click on the link in the Deployed Application section to start.
 2. When the application has launched you will have to Signup and create a new account.
 3. Once you have a new account created you will be taken to the Dashboard page where you can create your first group!
-4. After your first group has been created you can add users to the group and start creating tasks for that group.
-5. Once the tasks have been made you can assign each task to a different user and assign a priority to each task.
-6. 
+4. After your groups have been created you can add users to each group and start creating tasks.
+5. Once the tasks have been made you can assign a priority to each task and even add a due date for the task to be completed.
+6. Finally once the task has been completed you can check it off and move on to the next one!
 
 
 ## Motivations
@@ -50,7 +50,7 @@ Here is a list of our motivations for this project!
 - Practice on working with a team to build a functioning application start to finish in under two weeks
 - Make it easier to keep all of your ToDo's in one location where you won't lose them or forget
 - Continue to have a better understanding working with GitHub workflow
-- Work with REACT, MongoDB, GraphQL and JWT to create a working application while increasing our understanding in each of the universally used technologies
+- Work with React, MongoDB, GraphQL and JWT to create a working application while increasing our understanding in each of the universally used technologies
 - Showcase our creativity while improving our habits of coding
 - Create a space for people to come together and organize their lives even when they're not always so organized
 ## Deployed Application
