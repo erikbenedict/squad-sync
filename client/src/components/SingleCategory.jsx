@@ -11,7 +11,7 @@ import {
   Select,
 } from 'flowbite-react';
 
-export default function SingleCategory({ category }) {
+export default function SingleCategory({ category, updateCategory }) {
   const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
 
@@ -26,16 +26,8 @@ export default function SingleCategory({ category }) {
     const priority = event.target.priority.value;
     const dueDate = event.target.dueDate.value;
 
-    console.log('-----> Form Values <-----', {
-      categoryId,
-      taskName,
-      taskDescription,
-      priority,
-      dueDate,
-    });
-
     try {
-      await addTask({
+      const { data } = await addTask({
         variables: {
           categoryId: categoryId,
           taskName: taskName,
@@ -44,7 +36,19 @@ export default function SingleCategory({ category }) {
           priority: priority,
         },
       });
-      props.setOpenModal(undefined);
+      const tasksWithNewTask = [
+        ...category.tasks,
+        {
+          _id: data.addTask._id,
+          taskName: taskName,
+          taskDescription: taskDescription,
+          dueDate: dueDate,
+          priority: priority,
+        },
+      ];
+      console.log(data);
+      updateCategory({ ...category, tasks: tasksWithNewTask });
+      setOpenModal(undefined);
     } catch (e) {
       console.error(e);
     }
@@ -71,7 +75,7 @@ export default function SingleCategory({ category }) {
               )}`}
               href={`/taskPage/${task._id}`}
             >
-              {`${task.taskName} - ${task.dueDate}`}
+              {task.taskName} {task.dueDate}
             </ListGroup.Item>
           ))
         )}

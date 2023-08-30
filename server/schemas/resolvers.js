@@ -20,9 +20,12 @@ const resolvers = {
       Category.findOne({ _id: categoryId }),
 
     getGroupCategories: async (parent, { groupId }) => {
-      const groupCategories = await Group.findOne({ _id: groupId }).populate(
-        'categories'
-      );
+      const groupCategories = await Group.findOne({ _id: groupId }).populate({
+        path: 'categories',
+        populate: {
+          path: 'tasks',
+        },
+      });
 
       return groupCategories.categories;
     },

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GROUP_CATEGORIES } from '../graphql/queries';
 import { ADD_CATEGORY } from '../graphql/mutations';
@@ -9,16 +9,28 @@ function Categories({ groupId }) {
   const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
   const { loading, data } = useQuery(QUERY_GROUP_CATEGORIES, {
     variables: { groupId },
   });
-  const categories = data?.getGroupCategories;
+  const [categories, setCategories] = useState(data?.getGroupCategories || []);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  useEffect(() => {
+    setCategories(data?.getGroupCategories || []);
+  }, [data]);
 
   const [addCategory] = useMutation(ADD_CATEGORY, {
     refetchQueries: [{ query: QUERY_GROUP_CATEGORIES, variables: { groupId } }],
   });
+
+  const updateCategory = (newData) => {
+    console.log(newData);
+    const updatedCategories = categories.map((category) =>
+      category._id === newData._id ? newData : category
+    );
+    console.log(updatedCategories);
+    setCategories(updatedCategories);
+    setSelectedCategory(newData);
+  };
 
   const handleCategoryFormSubmit = async (event) => {
     event.preventDefault();
@@ -64,7 +76,11 @@ function Categories({ groupId }) {
         >
           {
             selectedCategory ? (
-              <SingleCategory category={selectedCategory} />
+              <SingleCategory
+                key={selectedCategory._id}
+                category={selectedCategory}
+                updateCategory={updateCategory}
+              />
             ) : null /* add placeholder div */
           }
         </div>
