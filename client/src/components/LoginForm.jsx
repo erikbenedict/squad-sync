@@ -81,7 +81,7 @@ export default function Login() {
             Login
           </button>
           {error && (
-            <p className="mt-2 text-sm text-red-500">
+            <p className="mt-2 text-sm font-semibold text-red-500 dark:text-amber-300">
               The provided credentials are incorrect
             </p>
           )}

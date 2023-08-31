@@ -109,7 +109,7 @@ export default function Registration() {
             Sign Up
           </button>
           {error && (
-            <p className="mt-4 text-red-500 text-sm">
+            <p className="mt-4 text-red-500 dark:text-amber-300 text-sm font-semibold">
               The provided credentials are incorrect
             </p>
           )}

@@ -161,20 +161,23 @@ function GroupPage() {
               <div className="text-center">
                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                   Are you sure you want to delete{' '}
-                  <span className="text-xl font-bold">{group.groupName}</span>?
+                  <span className="text-xl dark:text-white font-bold">
+                    {group.groupName}
+                  </span>
+                  ?
                 </h3>
                 <div className="flex justify-center gap-4">
                   <Button
                     color="failure"
                     onClick={handleDeleteGroup}
-                    className="transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+                    className="transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
                   >
                     Yes, I&rsquo;m sure
                   </Button>
                   <Button
                     color="gray"
                     onClick={() => props.setOpenModal(undefined)}
-                    className="transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+                    className="transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
                   >
                     No, cancel
                   </Button>
