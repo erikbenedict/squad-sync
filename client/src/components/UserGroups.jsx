@@ -11,7 +11,7 @@ function UserGroups() {
   const { loading, error, data } = useQuery(QUERY_USER_GROUPS, {
     variables: { userId: currentUser._id },
     onError: (err) => {
-      console.error("Error in useQuery:", err);
+      console.error("Error fetching groups:", err);
     },
   });
 
@@ -46,17 +46,16 @@ function UserGroups() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>There has been an error, please try again.</p>;
-  if (mutationError)
-    return <p>Error creating group, please try again.</p>;
+  if (mutationError) return <p>Error creating group, please try again.</p>;
 
   return (
     <>
       <div className="grid grid-cols-1 gap-10 mt-10 mb-10 place-content-stretch md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 2xl:mt-20 2xl:mb-20">
         {userGroups.map((group) => (
-          <Link key={group._id}>
-            <Card className="shadow-2xl hover:bg-white bg-slate-300">
+          <Link key={group._id} to={`/group/${group._id}`}>
+            <Card className="transition duration-500 ease-in-out transform border-4 border-indigo-900 border-double shadow-2xl hover:bg-white bg-slate-300 hover:-translate-y-1 hover:scale-110">
               <h5 className="flex items-center justify-center flex-grow text-lg font-bold tracking-tight text-gray-900 md:text-xl xl:text-2xl 2xl:text-3xl dark:text-white">
-                <p>{group.groupName}</p>
+                <p>♣{group.groupName}</p>
               </h5>
             </Card>
           </Link>
@@ -67,7 +66,7 @@ function UserGroups() {
           onClick={() => props.setOpenModal("form-elements")}
           color="dark"
         >
-          <i className="pr-2 fa-solid fa-plus"></i>+ Create Group
+          <i className="pr-1 fa-solid fa-plus"></i>✚ Create Group
         </Button>
         <Modal
           show={props.openModal === "form-elements"}

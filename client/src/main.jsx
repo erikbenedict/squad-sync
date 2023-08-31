@@ -21,6 +21,7 @@ import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Task from "./pages/Task";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route path="task/:taskId" element={<Task />}/>
     </Route>
   )
 );
