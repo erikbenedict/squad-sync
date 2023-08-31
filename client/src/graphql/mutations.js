@@ -239,8 +239,8 @@ export const REMOVE_CATEGORY = gql`
 `;
 
 export const REMOVE_TASK = gql`
-  mutation removeTask($taskId: ID!) {
-    removeTask(taskId: $taskId) {
+  mutation removeTask($categoryId: ID!, $taskId: ID!) {
+    removeTask(categoryId: $categoryId, taskId: $taskId) {
       _id
     }
   }

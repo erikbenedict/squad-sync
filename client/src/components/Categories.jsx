@@ -82,7 +82,7 @@ function Categories({ groupId }) {
           {categories.map((category) => (
             <div
               key={category._id}
-              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 flex justify-between"
+              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 flex justify-between items-center cursor-pointer"
               onClick={() => setSelectedCategory(category)}
             >
               <h3 className="category-name">{category.categoryName}</h3>

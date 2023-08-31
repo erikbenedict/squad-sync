@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_TASK } from '../graphql/mutations';
+import { ADD_TASK, REMOVE_TASK } from '../graphql/mutations';
 import {
-  ListGroup,
   Button,
   Label,
   Modal,
@@ -16,6 +15,7 @@ export default function SingleCategory({ category, updateCategory }) {
   const props = { openModal, setOpenModal };
 
   const [addTask] = useMutation(ADD_TASK);
+  const [removeTask] = useMutation(REMOVE_TASK);
 
   const handleTaskFormSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +54,25 @@ export default function SingleCategory({ category, updateCategory }) {
     }
   };
 
+  const handleRemoveTask = async (event, taskId) => {
+    event.preventDefault();
+    const categoryId = category._id;
+    try {
+      await removeTask({
+        variables: {
+          categoryId: categoryId,
+          taskId: taskId,
+        },
+      });
+      updateCategory({
+        ...category,
+        tasks: category.tasks.filter((task) => task._id !== taskId),
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className="single-category-container">
       <div className="border-4 rounded-lg border-solid border-slate-300 w-full flex justify-center items-center mb-3 p-2">
@@ -61,28 +80,35 @@ export default function SingleCategory({ category, updateCategory }) {
           {category.categoryName} Tasks
         </h3>
       </div>
-      <ListGroup className="task-list mb-2">
+      <div className="task-list mb-2">
         {category.tasks.length === 0 ? (
-          <ListGroup.Item className=" bg-slate-400 border-2 rounded-lg border-solid border-slate-300">
+          <div className="items-center bg-slate-400 border-2 rounded-lg border-solid border-slate-300 p-2 text-center">
             Add a task to get started!
-          </ListGroup.Item>
+          </div>
         ) : (
           category.tasks.map((task) => (
-            <ListGroup.Item
+            <div
               key={task._id}
-              className={`bg-slate-400 border-2 rounded-lg border-solid border-slate-300 ${getPriorityClass(
+              className={`flex justify-between items-center bg-slate-400 border-2 rounded-lg border-solid border-slate-300 p-2 cursor-pointer ${getPriorityClass(
                 task.priority
               )}`}
               href={`/taskPage/${task._id}`}
             >
-              <div className="">
-                <div>{task.taskName}</div>
+              <div>
+                <h3>{task.taskName}</h3>
                 <div>{task.dueDate ? `Due Date: ${task.dueDate}` : null}</div>
               </div>
-            </ListGroup.Item>
+              <button
+                type="button"
+                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center"
+                onClick={(event) => handleRemoveTask(event, task._id)}
+              >
+                X
+              </button>
+            </div>
           ))
         )}
-      </ListGroup>
+      </div>
 
       {/* <---- Modal ----> */}
       <Button onClick={() => props.setOpenModal('form-elements')}>
@@ -136,7 +162,7 @@ export default function SingleCategory({ category, updateCategory }) {
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="dueDate" value="Select a due date (if any)" />
+                <Label htmlFor="dueDate" value="Enter a due date (if any)" />
               </div>
               <TextInput
                 type="text"
@@ -156,14 +182,14 @@ export default function SingleCategory({ category, updateCategory }) {
 }
 
 function getPriorityClass(priority) {
-  if (priority === 'high') {
-    return 'task-priority-high';
+  if (priority === 'High') {
+    return 'bg-red-500';
   }
-  if (priority === 'medium') {
-    return 'task-priority-medium';
+  if (priority === 'Medium') {
+    return 'bg-amber-500';
   }
-  if (priority === 'low') {
-    return 'task-priority-low';
+  if (priority === 'Low') {
+    return 'bg-green-500';
   }
-  return ''; // Default class if priority is not matched
+  return '';
 }
