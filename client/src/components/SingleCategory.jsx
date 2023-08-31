@@ -100,7 +100,7 @@ export default function SingleCategory({ category, updateCategory }) {
             >
               <div>
                 <h3 className="">{task.taskName}</h3>
-                <div className="hidden">
+                <div className="hidden md:inline">
                   {task.dueDate ? `Due Date: ${task.dueDate}` : null}
                 </div>
               </div>
