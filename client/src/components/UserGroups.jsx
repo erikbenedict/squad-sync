@@ -91,7 +91,10 @@ function UserGroups() {
                 />
               </div>
               <div className="w-full">
-                <Button type="submit" color="dark">
+                <Button
+                  type="submit"
+                  className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+                >
                   Create Group!
                 </Button>
               </div>
