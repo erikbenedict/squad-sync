@@ -55,7 +55,7 @@ function UserGroups() {
           <Link key={group._id} to={`/groupPage/${group._id}`}>
             <Card className="transition duration-500 ease-in-out transform border-4 border-indigo-900 border-double shadow-2xl hover:bg-white bg-slate-300 hover:-translate-y-1 hover:scale-110">
               <h5 className="flex items-center justify-center flex-grow text-lg font-bold tracking-tight text-gray-900 md:text-xl xl:text-2xl 2xl:text-3xl dark:text-white">
-                <p>♣{group.groupName}</p>
+                <p>➲ {group.groupName}</p>
               </h5>
             </Card>
           </Link>
@@ -64,9 +64,9 @@ function UserGroups() {
       <div className="flex flex-col items-center">
         <Button
           onClick={() => props.setOpenModal('form-elements')}
-          color="dark"
+          className="px-4 py-2 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
         >
-          <i className="pr-1 fa-solid fa-plus"></i>✚ Create Group
+          ✚ Create Group
         </Button>
         <Modal
           show={props.openModal === 'form-elements'}
@@ -91,7 +91,10 @@ function UserGroups() {
                 />
               </div>
               <div className="w-full">
-                <Button type="submit" color="dark">
+                <Button
+                  type="submit"
+                  className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+                >
                   Create Group!
                 </Button>
               </div>

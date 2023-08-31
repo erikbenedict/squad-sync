@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCurrentUserContext } from '../context/CurrentUser';
 import DarkModeToggle from "./DarkModeToggle";
+import { Collapse } from 'flowbite';
 
 function Header() {
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
 
-
+  const collapse = new Collapse({
+    targetEl: document.getElementById('navbar-default'),
+    triggerEl: document.getElementById('navbar-toggle-button'),
+  }); 
+  
   return (
     <nav className="border-gray-200 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-screen-xl  flex flex-wrap items-center justify-between mx-auto p-4">
@@ -74,5 +79,4 @@ function Header() {
   );
 }
 
-export default Header;
-
+export default Header;Header.jsx

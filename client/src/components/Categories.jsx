@@ -8,6 +8,10 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 function Categories({ groupId }) {
   const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
+  const [confirmationModal, setConfirmationModal] = useState({
+    visible: false,
+    categoryId: null,
+  });
 
   const { loading, data } = useQuery(QUERY_GROUP_CATEGORIES, {
     variables: { groupId },
@@ -34,6 +38,20 @@ function Categories({ groupId }) {
     setSelectedCategory(newData);
   };
 
+  const handleRemoveCategoryConfirmation = (categoryId) => {
+    setConfirmationModal({
+      visible: true,
+      categoryId: categoryId,
+    });
+  };
+
+  const closeConfirmationModal = () => {
+    setConfirmationModal({
+      visible: false,
+      categoryId: null,
+    });
+  };
+
   const handleRemoveCategory = async (event, categoryId) => {
     event.preventDefault();
     try {
@@ -46,6 +64,7 @@ function Categories({ groupId }) {
       setCategories((updatedCategories) =>
         updatedCategories.filter((category) => category._id !== categoryId)
       );
+      closeConfirmationModal();
       setSelectedCategory(null);
     } catch (e) {
       console.error(e);
@@ -75,29 +94,80 @@ function Categories({ groupId }) {
   return (
     <div className="categories-container">
       <div className="flex">
-        <div className="category-list w-1/2 p-2">
+        <div className="w-1/2 p-2">
           <h2 className="text-center text-2xl font-semibold mb-2">
             Categories
           </h2>
-          {categories.map((category) => (
-            <div
-              key={category._id}
-              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 flex justify-between items-center cursor-pointer"
-              onClick={() => setSelectedCategory(category)}
+          <div>
+            {categories.length === 0 ? (
+              <div className="rounded-lg border-2 border-gray-900 shadow-2xl bg-slate-300 p-2 mb-3 items-center flex justify-center">
+                <h3 className="font-semibold text-lg">
+                  Add a category to get started!
+                </h3>
+              </div>
+            ) : (
+              categories.map((category) => (
+                <div
+                  key={category._id}
+                  className="category-div rounded-lg border-2 border-gray-900 shadow-2xl bg-slate-300 p-2 mb-3 flex justify-between items-center transition ease-in-out hover:bg-slate-200 hover:-translate-y-1 hover:scale-100  cursor-pointer"
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  <h3 className="category-name font-semibold text-lg">
+                    {category.categoryName}
+                  </h3>
+                  <button
+                    type="button"
+                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center mr-2 mb-2"
+                    onClick={() =>
+                      handleRemoveCategoryConfirmation(category._id)
+                    }
+                  >
+                    X
+                  </button>
+                </div>
+              ))
+            )}
+            {/* Confirmation Modal */}
+            <Modal
+              show={confirmationModal.visible}
+              size="md"
+              popup
+              onClose={closeConfirmationModal}
             >
-              <h3 className="category-name">{category.categoryName}</h3>
-              <button
-                type="button"
-                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center mr-2 mb-2"
-                onClick={(event) => handleRemoveCategory(event, category._id)}
-              >
-                X
-              </button>
-            </div>
-          ))}
+              <Modal.Header />
+              <Modal.Body>
+                <div className="text-center">
+                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete this category?
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <Button
+                      color="failure"
+                      onClick={(event) =>
+                        handleRemoveCategory(
+                          event,
+                          confirmationModal.categoryId
+                        )
+                      }
+                      className="transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+                    >
+                      Yes, I&rsquo;m sure
+                    </Button>
+                    <Button
+                      color="gray"
+                      onClick={closeConfirmationModal}
+                      className="transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                    >
+                      No, cancel
+                    </Button>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+          </div>
         </div>
         <div
-          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 ${
+          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 bg-gray-400 dark:bg-gray-600 p-3 mb-3 ${
             selectedCategory ? '' : 'hidden'
           }`}
         >
@@ -114,8 +184,11 @@ function Categories({ groupId }) {
       </div>
 
       {/* <---- Modal ----> */}
-      <Button onClick={() => props.setOpenModal('form-elements')}>
-        <i className="fa-solid fa-plus pr-2"></i>Category
+      <Button
+        onClick={() => props.setOpenModal('form-elements')}
+        className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+      >
+        ✚ Category
       </Button>
       <Modal
         show={props.openModal === 'form-elements'}
@@ -140,7 +213,12 @@ function Categories({ groupId }) {
               />
             </div>
             <div className="w-full">
-              <Button type="submit">Add Category!</Button>
+              <Button
+                type="submit"
+                className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+              >
+                Add Category!
+              </Button>
             </div>
           </form>
         </Modal.Body>
