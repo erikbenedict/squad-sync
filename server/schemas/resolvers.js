@@ -239,6 +239,20 @@ const resolvers = {
       return taskToUpdate;
     },
 
+    updateTaskDescription: async (parent, { taskId, taskDescription }) => {
+      const taskToUpdate = await Task.findById(taskId);
+    
+      if (!taskToUpdate) {
+        throw new Error('Task not found');
+      }
+    
+      taskToUpdate.taskDescription = taskDescription;
+    
+      await taskToUpdate.save();
+    
+      return taskToUpdate;
+    },
+
     removeGroup: async (parent, { groupId }) => {
       try {
         const groupToDelete = await Group.findById(groupId);

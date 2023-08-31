@@ -208,6 +208,18 @@ export const UPDATE_TASK = gql`
   }
 `;
 
+export const UPDATE_TASK_DESCRIPTION = gql`
+  mutation updateTaskDescription(
+    $taskId: ID!
+    $taskDescription: String!
+  ) {
+    updateTaskDescription(taskId: $taskId, taskDescription: $taskDescription) {
+      _id
+      taskDescription
+    }
+  }
+`;
+
 export const REMOVE_GROUP = gql`
   mutation removeGroup($groupId: ID!) {
     removeGroup(groupId: $groupId) {

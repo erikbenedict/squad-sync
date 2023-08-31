@@ -21,6 +21,14 @@ import Register from './pages/Register';
 import GroupPage from './pages/GroupPage';
 import TaskPage from './pages/TaskPage';
 
+import App from './App';
+import Error from './pages/Error';
+import Landing from './pages/Landing';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Task from './pages/Task';
+
 import ProtectedRoute from './components/ProtectedRoute';
 
 const router = createBrowserRouter(
@@ -45,14 +53,7 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-      <Route
-        path="taskPage/:taskId"
-        element={
-          <ProtectedRoute>
-            <TaskPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="task/:taskId" element={<Task />} />
     </Route>
   )
 );
