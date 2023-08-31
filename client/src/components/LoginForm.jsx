@@ -23,9 +23,9 @@ export default function Login() {
           password: formState.password,
         },
       });
-      const { token, user } = mutationResponse.data.login;
-      loginUser(user, token);
-      navigate("/dashboard");
+      const { token, currentUser } = mutationResponse.data.login;
+      loginUser(currentUser, token);
+      navigate('/dashboard');
     } catch (e) {
       console.log(e);
     }
@@ -37,8 +37,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen dark:text-white bg-gray-100 dark:bg-gray-900">
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-md w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:text-white dark:bg-gray-900">
+      <div className="w-full max-w-md p-8 bg-white rounded-md shadow-md dark:bg-gray-800">
         <form id="login-form" onSubmit={handleFormSubmit}>
           <h2 className="mb-4 text-xl font-semibold">Login</h2>
           <label htmlFor="email" className="block mb-2">
@@ -67,13 +67,13 @@ export default function Login() {
           </label>
           
           <button
-            className="w-full mt-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none"
+            className="w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
             type="submit"
           >
             Login
           </button>
           {error && (
-            <p className="mt-2 text-red-500 text-sm">
+            <p className="mt-2 text-sm text-red-500">
               The provided credentials are incorrect
             </p>
           )}
