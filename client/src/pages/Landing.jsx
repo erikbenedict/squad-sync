@@ -30,17 +30,16 @@ const Landing = () => {
             </div>
             <div className="max-w-md mx-auto text-center">
               <p className="mb-8 text-gray-700 text-lg leading-relaxed bg-gray-200 p-2 rounded-lg shadow-lg">
-                Your <span className="font-semibold">ultimate solution</span>{' '}
+                • Your <span className="font-semibold">ultimate solution</span>{' '}
                 for seamless{' '}
                 <span className="font-semibold">team collaboration</span> and
                 efficient{' '}
                 <span className="font-semibold">task management </span>.
                 <br />
                 <br />
-                Say goodbye to scattered tasks and disjointed communication.
+                • Say goodbye to scattered tasks and disjointed communication.
                 <br />
-                <br />
-                Say hello to a new era of{' '}
+                <br />• Say hello to a new era of{' '}
                 <span className="font-semibold">productivity</span>.
               </p>
               <div className="flex justify-center space-x-4">
@@ -115,7 +114,7 @@ const Landing = () => {
                       <li>
                         <Link
                           to="/register"
-                          className="text-blue-500 hover:underline"
+                          className="text-cyan-400 hover:underline"
                         >
                           Create an Account here:
                         </Link>{' '}
