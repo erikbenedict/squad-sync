@@ -10,6 +10,8 @@ import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import { CurrentUserProvider } from './context';
 
+import 'flowbite/dist/flowbite.min.css';
+
 import App from './App';
 import Error from './pages/Error';
 import Landing from './pages/Landing';

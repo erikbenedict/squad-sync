@@ -1,3 +1,4 @@
+// resolvers.js
 const { User, Group, Category, Task } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
 
