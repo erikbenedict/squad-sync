@@ -1,3 +1,4 @@
+// resolvers.js
 const { User, Group, Category, Task } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
 
@@ -20,9 +21,12 @@ const resolvers = {
       Category.findOne({ _id: categoryId }),
 
     getGroupCategories: async (parent, { groupId }) => {
-      const groupCategories = await Group.findOne({ _id: groupId }).populate(
-        'categories'
-      );
+      const groupCategories = await Group.findOne({ _id: groupId }).populate({
+        path: 'categories',
+        populate: {
+          path: 'tasks',
+        },
+      });
 
       return groupCategories.categories;
     },
@@ -78,16 +82,17 @@ const resolvers = {
       return group;
     },
 
-    addUserToGroup: async (parent, { groupId, userId }) => {
-      const userToAdd = await User.findById(userId);
-      const groupToUpdate = await Group.findById(groupId);
-
-      if (!userToAdd || !groupToUpdate) {
-        throw new Error('User or group not found.');
-      }
-
-      groupToUpdate.users.push(userToAdd._id);
-      await groupToUpdate.save();
+    addUserToGroup: async (parent, { groupId, email }) => {
+      const userToAdd = await User.findOneAndUpdate(
+        { email },
+        { $addToSet: { groups: groupId } },
+        { new: true }
+      );
+      const groupToUpdate = await Group.findByIdAndUpdate(
+        groupId,
+        { $addToSet: { users: userToAdd._id } },
+        { new: true }
+      );
 
       const updatedGroup = await groupToUpdate.populate('users');
 
@@ -106,25 +111,57 @@ const resolvers = {
       return category;
     },
 
+    // addTask: async (
+    //   parent,
+    //   {
+    //     categoryId,
+    //     taskName,
+    //     taskDescription,
+    //     dueDate,
+    //     priority,
+    //     assignedUserId,
+    //   }
+    // ) => {
+    //   const taskData = {
+    //     taskName,
+    //     taskDescription,
+    //     dueDate,
+    //     priority,
+    //     users: [],
+    //   };
+
+    //   let user;
+
+    //   if (assignedUserId) {
+    //     user = await User.findById(assignedUserId);
+    //     taskData.users.push(user._id);
+    //   }
+
+    //   const task = await Task.create(taskData);
+
+    //   await Category.findOneAndUpdate(
+    //     { _id: categoryId },
+    //     { $addToSet: { tasks: task._id } },
+    //     { new: true }
+    //   );
+
+    //   if (assignedUserId) {
+    //     user.tasks.push(task._id);
+    //     await user.save();
+    //   }
+
+    //   return task;
+    // },
+
     addTask: async (
       parent,
-      {
-        categoryId,
-        taskName,
-        taskDescription,
-        dueDate,
-        priority,
-        assignedUserId,
-      }
+      { categoryId, taskName, taskDescription, dueDate, priority }
     ) => {
-      const user = await User.findById(assignedUserId);
-
       const task = await Task.create({
         taskName,
         taskDescription,
         dueDate,
         priority,
-        users: [user._id],
       });
 
       await Category.findOneAndUpdate(
@@ -132,9 +169,6 @@ const resolvers = {
         { $addToSet: { tasks: task._id } },
         { new: true }
       );
-
-      user.tasks.push(task._id);
-      await user.save();
 
       return task;
     },
@@ -165,6 +199,8 @@ const resolvers = {
     //   return groupToUpdate;
     // },
 
+    //   throw new AuthenticationError('You must be logged in to update a group.');
+    // },
     updateCategory: async (parent, { categoryId, categoryName }) => {
       const categoryToUpdate = await Category.findById(categoryId);
       if (!categoryToUpdate) {
@@ -203,12 +239,52 @@ const resolvers = {
       return taskToUpdate;
     },
 
-    removeGroup: async (parent, { groupId }) => {
-      const group = await Group.findOneAndDelete({
-        _id: groupId,
-      });
+    updateTaskDescription: async (parent, { taskId, taskDescription }) => {
+      const taskToUpdate = await Task.findById(taskId);
+    
+      if (!taskToUpdate) {
+        throw new Error('Task not found');
+      }
+    
+      taskToUpdate.taskDescription = taskDescription;
+    
+      await taskToUpdate.save();
+    
+      return taskToUpdate;
+    },
 
-      return group;
+    removeGroup: async (parent, { groupId }) => {
+      try {
+        const groupToDelete = await Group.findById(groupId);
+
+        if (!groupToDelete) {
+          throw new Error('Group not found.');
+        }
+
+        const usersInGroup = await User.find({
+          _id: { $in: groupToDelete.users },
+        });
+
+        const updateUserPromises = usersInGroup.map(async (user) => {
+          user.groups.pull(groupId);
+          return user.save();
+        });
+
+        await Promise.all(updateUserPromises);
+
+        const categoriesToDelete = groupToDelete.categories;
+        await Category.deleteMany({ _id: { $in: categoriesToDelete } });
+
+        const tasksToDelete = categoriesToDelete.tasks;
+        await Task.deleteMany({ _id: { $in: tasksToDelete } });
+
+        await Group.findByIdAndDelete(groupId);
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
     },
 
     removeUserFromGroup: async (parent, { userId, groupId }) => {
@@ -229,6 +305,11 @@ const resolvers = {
 
     removeCategory: async (parent, { groupId, categoryId }) => {
       const category = await Category.findOneAndDelete({ _id: categoryId });
+
+      const tasksToDelete = category.tasks || [];
+
+      await Task.deleteMany({ _id: { $in: tasksToDelete } });
+
       await Group.findOneAndUpdate(
         { _id: groupId },
         { $pull: { categories: category._id } }

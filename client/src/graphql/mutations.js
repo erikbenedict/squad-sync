@@ -1,3 +1,4 @@
+// mutations.js
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
@@ -55,8 +56,8 @@ export const ADD_GROUP = gql`
 `;
 
 export const ADD_USER_TO_GROUP = gql`
-  mutation addUserToGroup($groupId: ID!, $userId: ID!) {
-    addUserToGroup(groupId: $groupId, userId: $userId) {
+  mutation addUserToGroup($groupId: ID!, $email: String!) {
+    addUserToGroup(groupId: $groupId, email: $email) {
       _id
       groupName
       users {
@@ -90,11 +91,10 @@ export const ADD_CATEGORY = gql`
 export const ADD_TASK = gql`
   mutation addTask(
     $categoryId: ID!
-    $taskName: String!
+    $taskName: String
     $taskDescription: String
-    $dueDate: Date
-    $priority: String!
-    $assignedUserId: ID
+    $dueDate: String
+    $priority: String
   ) {
     addTask(
       categoryId: $categoryId
@@ -102,7 +102,6 @@ export const ADD_TASK = gql`
       taskDescription: $taskDescription
       dueDate: $dueDate
       priority: $priority
-      assignedUserId: $assignedUserId
     ) {
       _id
       taskName
@@ -209,6 +208,18 @@ export const UPDATE_TASK = gql`
   }
 `;
 
+export const UPDATE_TASK_DESCRIPTION = gql`
+  mutation updateTaskDescription(
+    $taskId: ID!
+    $taskDescription: String!
+  ) {
+    updateTaskDescription(taskId: $taskId, taskDescription: $taskDescription) {
+      _id
+      taskDescription
+    }
+  }
+`;
+
 export const REMOVE_GROUP = gql`
   mutation removeGroup($groupId: ID!) {
     removeGroup(groupId: $groupId) {
@@ -232,16 +243,16 @@ export const REMOVE_USER_FROM_GROUP = gql`
 `;
 
 export const REMOVE_CATEGORY = gql`
-  mutation removeCategory($categoryId: ID!) {
-    removeCategory(categoryId: $categoryId) {
+  mutation removeCategory($groupId: ID!, $categoryId: ID!) {
+    removeCategory(groupId: $groupId, categoryId: $categoryId) {
       _id
     }
   }
 `;
 
 export const REMOVE_TASK = gql`
-  mutation removeTask($taskId: ID!) {
-    removeTask(taskId: $taskId) {
+  mutation removeTask($categoryId: ID!, $taskId: ID!) {
+    removeTask(categoryId: $categoryId, taskId: $taskId) {
       _id
     }
   }

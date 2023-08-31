@@ -1,3 +1,4 @@
+// typeDefs.js
 const typeDefs = `#graphql
   type User {
     _id: ID
@@ -6,6 +7,7 @@ const typeDefs = `#graphql
     email: String
     password: String
     groups: [Group]!
+    tasks: [Task]!
   }
 
    type Category {
@@ -23,12 +25,12 @@ const typeDefs = `#graphql
   
   type Task {
     _id: ID
-    taskName: String!
+    taskName: String
     taskDescription: String
     dueDate: String
-    priority: String!
-    users: [User]!
-    comments: [Comment]!
+    priority: String
+    users: [User]
+    comments: [Comment]
   }
 
   type Comment {
@@ -58,13 +60,14 @@ const typeDefs = `#graphql
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addGroup(groupName: String!, userId: ID!): Group
-    addUserToGroup(groupId: ID!, userId: ID!): Group
+    addUserToGroup(groupId: ID!, email: String!): Group
     addCategory(groupId: ID!, categoryName: String!): Category
-    addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID): Task
+    addTask(categoryId: ID!, taskName: String, taskDescription: String, dueDate: String, priority: String): Task
     addComment(taskId: ID!, commentText: String!): Task
     #updateGroup(groupId: ID!, groupName: String!): Group
     updateCategory(categoryId: ID!, categoryName: String!): Category
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String! assignedUserId: ID!): Task
+    updateTaskDescription(taskId: ID!, taskDescription: String!): Task
     removeGroup(groupId: ID!): Group
     removeUserFromGroup(userId: ID!, groupId: ID!): Group
     removeCategory(groupId: ID!, categoryId: ID!): Category

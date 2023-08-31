@@ -1,4 +1,6 @@
+//queries.js
 import { gql } from '@apollo/client';
+
 
 export const QUERY_SINGLE_USER = gql`
   query getSingleUser($email: String!) {
@@ -53,6 +55,18 @@ export const QUERY_GROUP_CATEGORIES = gql`
         taskName
         taskDescription
         dueDate
+        priority
+        users {
+          _id
+          firstName
+          lastName
+        }
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
     }
   }
@@ -65,6 +79,7 @@ export const QUERY_SINGLE_CATEGORY = gql`
       categoryName
       tasks {
         taskName
+        taskDescription
         dueDate
         priority
         users {
@@ -114,3 +129,4 @@ export const QUERY_SINGLE_TASK = gql`
     }
   }
 `;
+
