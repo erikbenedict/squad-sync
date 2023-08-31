@@ -83,13 +83,13 @@ const SelectedTask = () => {
               </p>
             )}
           </div>
-          <div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2">
-            {task.dueDate && (
+          {task.dueDate
+            ? `<div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2">
               <p className="font-medium text-gray-800 bg-slate-300 2xl:text-2xl xl:text-xl lg:text-lg">
-                Due Date: {task.dueDate}
+                Due Date: ${task.dueDate}
               </p>
-            )}
-          </div>
+          </div>`
+            : null}
           <div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2">
             <p className="font-medium text-gray-800 2xl:text-2xl xl:text-xl lg:text-lg">
               Description: {task.taskDescription}

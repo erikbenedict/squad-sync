@@ -58,7 +58,7 @@ function GroupPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="h-screen p-6 bg-gray-100 dark:bg-gray-900 md:w-3/4 mx-auto">
+    <div className="p-6 bg-gray-100 dark:bg-gray-900 md:w-3/4 mx-auto">
       <div className="lg:my-20 p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
         <header className="group-header mt-5 mb-5 md:flex md:items-end justify-between items-center">
           <h1 className="group-name text-center text-2xl mr-1 md:text-5xl font-semibold dark:text-white">
@@ -80,7 +80,10 @@ function GroupPage() {
                 <div className="space-y-6">
                   <ul>
                     {group.users.map((user) => (
-                      <li key={user._id} className="text-lg font-medium">
+                      <li
+                        key={user._id}
+                        className="text-lg dark:text-white font-medium"
+                      >
                         • {user.firstName} {user.lastName}
                       </li>
                     ))}

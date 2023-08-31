@@ -93,8 +93,8 @@ function Categories({ groupId }) {
 
   return (
     <div className="categories-container">
-      <div className="flex">
-        <div className="w-1/2 p-2">
+      <div className="md:flex">
+        <div className="md:w-1/2 p-2">
           <h2 className="text-center text-2xl font-semibold mb-2">
             Categories
           </h2>
@@ -167,7 +167,7 @@ function Categories({ groupId }) {
           </div>
         </div>
         <div
-          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 bg-gray-400 dark:bg-gray-600 p-3 mb-3 ${
+          className={`single-category-div md:w-1/2 border-4 rounded-lg border-solid border-slate-300 bg-gray-400 dark:bg-gray-600 p-3 mb-3 ${
             selectedCategory ? '' : 'hidden'
           }`}
         >
@@ -184,45 +184,47 @@ function Categories({ groupId }) {
       </div>
 
       {/* <---- Modal ----> */}
-      <Button
-        onClick={() => props.setOpenModal('form-elements')}
-        className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
-      >
-        ✚ Category
-      </Button>
-      <Modal
-        show={props.openModal === 'form-elements'}
-        size="md"
-        popup
-        onClose={() => props.setOpenModal(undefined)}
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <form className="space-y-6" onSubmit={handleCategoryFormSubmit}>
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Create a new Category
-            </h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="categoryName" value="Category Name" />
+      <div className="flex justify-center md:inline">
+        <Button
+          onClick={() => props.setOpenModal('form-elements')}
+          className=" p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+        >
+          ✚ Category
+        </Button>
+        <Modal
+          show={props.openModal === 'form-elements'}
+          size="md"
+          popup
+          onClose={() => props.setOpenModal(undefined)}
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <form className="space-y-6" onSubmit={handleCategoryFormSubmit}>
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                Create a new Category
+              </h3>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="categoryName" value="Category Name" />
+                </div>
+                <TextInput
+                  id="categoryName"
+                  placeholder="Enter a name for the new category"
+                  required
+                />
               </div>
-              <TextInput
-                id="categoryName"
-                placeholder="Enter a name for the new category"
-                required
-              />
-            </div>
-            <div className="w-full">
-              <Button
-                type="submit"
-                className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
-              >
-                Add Category!
-              </Button>
-            </div>
-          </form>
-        </Modal.Body>
-      </Modal>
+              <div className="w-full">
+                <Button
+                  type="submit"
+                  className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                >
+                  Add Category!
+                </Button>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
+      </div>
     </div>
   );
 }
