@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_TASK, REMOVE_TASK } from '../graphql/mutations';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Label,
@@ -87,12 +88,12 @@ export default function SingleCategory({ category, updateCategory }) {
           </div>
         ) : (
           category.tasks.map((task) => (
-            <div
+            <Link
+              to={`/task/${task._id}?groupId=${category._id}`}
               key={task._id}
               className={`flex justify-between items-center bg-slate-400 border-2 rounded-lg border-solid border-slate-300 p-2 cursor-pointer ${getPriorityClass(
                 task.priority
               )}`}
-              href={`/taskPage/${task._id}`}
             >
               <div>
                 <h3>{task.taskName}</h3>
@@ -105,7 +106,7 @@ export default function SingleCategory({ category, updateCategory }) {
               >
                 X
               </button>
-            </div>
+            </Link>
           ))
         )}
       </div>

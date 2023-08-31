@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Carousel } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Carousel } from 'flowbite-react';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
   const [showCarousel, setShowCarousel] = useState(false);
@@ -17,24 +17,26 @@ const Landing = () => {
     <div className="flex items-center justify-center min-h-screen ">
       {!showCarousel ? (
         <div
-          className="bg-gray-400 p-2 w-45 md:p-16 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-600 max-w-screen-sm mx-auto"
-          style={{ maxWidth: "100vw" }}
+          className="bg-gray-400 p-2 w-45 md:p-16 rounded-lg shadow-lg dark:bg-gray-600 max-w-screen-sm mx-auto"
+          style={{ maxWidth: '100vw' }}
         >
           <h1 className="text-4xl font-semibold mb-4 text-gray-800 dark:text-black text-center">
             Welcome to SquadSync
           </h1>
-          <div className="bg-white p-6 md:p-10 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-400">
+          <div className="p-6 md:p-10 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-400">
             <div className="max-w-md mx-auto text-center">
               <p className="mb-8 text-gray-700 text-lg leading-relaxed">
-                Your <span className="font-semibold">ultimate solution</span>{" "}
-                for seamless <span className="font-semibold">team collaboration</span> and efficient{" "}
+                Your <span className="font-semibold">ultimate solution</span>{' '}
+                for seamless{' '}
+                <span className="font-semibold">team collaboration</span> and
+                efficient{' '}
                 <span className="font-semibold">task management </span>.
                 <br />
                 <br />
                 Say goodbye to scattered tasks and disjointed communication.
                 <br />
                 <br />
-                Say hello to a new era of{" "}
+                Say hello to a new era of{' '}
                 <span className="font-semibold">productivity</span>.
               </p>
               <div className="flex justify-center space-x-4">
@@ -79,9 +81,9 @@ const Landing = () => {
                   <p>
                     SquadSync, a cutting-edge task management application,
                     redefines the way teams collaborate and organize their
-                    projects. Inspired by the concept of a "HoneyDo" list,
-                    SquadSync empowers users to create and manage tasks, all
-                    within a seamless and unified platform.
+                    projects. Inspired by the concept of a &quot;HoneyDo&quot;
+                    list, SquadSync empowers users to create and manage tasks,
+                    all within a seamless and unified platform.
                     {/* Continue your text content */}
                   </p>
                 </div>
@@ -101,7 +103,7 @@ const Landing = () => {
                     How to Use SquadSync
                   </h2>
                 </div>
-                <div className="text-base text-black overflow-auto">
+                <div className="text-base text-black overflow-auto font-semibold">
                   <div className="text-gray-900 text-bold">
                     Getting started with SquadSync is easy! Follow these simple
                     steps to harness the power of collaborative task management:
@@ -112,7 +114,7 @@ const Landing = () => {
                           className="text-blue-500 hover:underline"
                         >
                           Create an Account here:
-                        </Link>{" "}
+                        </Link>{' '}
                         Sign up for SquadSync using your email and password.
                       </li>
                       <li>
