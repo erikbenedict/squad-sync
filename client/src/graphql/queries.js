@@ -1,9 +1,10 @@
 //queries.js
 import { gql } from '@apollo/client';
 
-export const QUERY_CURRENT_USER = gql`
-  query getCurrentUser($email: String!) {
-    currentUser(email: $email) {
+
+export const QUERY_SINGLE_USER = gql`
+  query getSingleUser($email: String!) {
+    getSingleUser(email: $email) {
       _id
       email
       firstName
@@ -26,20 +27,9 @@ export const QUERY_USER_GROUPS = gql`
   }
 `;
 
-// export const QUERY_GROUP_USERS = gql`
-//   query getGroupUsers($groupId: ID!) {
-//     groupUsers(groupId: $groupId) {
-//       _id
-//       firstName
-//       lastName
-//       email
-//     }
-//   }
-// `;
-
 export const QUERY_SINGLE_GROUP = gql`
   query getSingleGroup($groupId: ID!) {
-    singleGroup(groupId: $groupId) {
+    getSingleGroup(groupId: $groupId) {
       _id
       groupName
       categories {
@@ -55,24 +45,24 @@ export const QUERY_SINGLE_GROUP = gql`
   }
 `;
 
-// export const QUERY_GROUP_CATEGORIES = gql`
-//   query getGroupCategories($groupId: ID!) {
-//     groupCategories(groupId: $groupId) {
-//       _id
-//       categoryName
-//       tasks {
-//         _id
-//         taskName
-//         taskDescription
-//         dueDate
-//       }
-//     }
-//   }
-// `;
+export const QUERY_GROUP_CATEGORIES = gql`
+  query getGroupCategories($groupId: ID!) {
+    getGroupCategories(groupId: $groupId) {
+      _id
+      categoryName
+      tasks {
+        _id
+        taskName
+        taskDescription
+        dueDate
+      }
+    }
+  }
+`;
 
 export const QUERY_SINGLE_CATEGORY = gql`
   query getSingleCategory($categoryId: ID!) {
-    singleCategory(categoryId: $categoryId) {
+    getSingleCategory(categoryId: $categoryId) {
       _id
       categoryName
       tasks {
@@ -106,7 +96,7 @@ export const QUERY_SINGLE_CATEGORY = gql`
 
 export const QUERY_SINGLE_TASK = gql`
   query getSingleTask($taskId: ID!) {
-    singleTask(taskId: $taskId) {
+    getSingleTask(taskId: $taskId) {
       _id
       taskName
       taskDescription
@@ -127,30 +117,3 @@ export const QUERY_SINGLE_TASK = gql`
   }
 `;
 
-
-// export const QUERY_SEARCH_TASKS = gql`
-//   query searchTasks($searchQuery: String!, $groupIds: [ID!]!) {
-//     searchTasks(searchQuery: $searchQuery, groupIds: $groupIds) {
-//       _id
-//       taskName
-//       taskDescription
-//       dueDate
-//       priority
-//       users {
-//         _id
-//         firstName
-//         lastName
-//       }
-//       comments {
-//         _id
-//         commentText
-//         commentAuthor
-//         createdAt
-//       }
-//       category {
-//         _id
-//         categoryName
-//       }
-//     }
-//   }
-// `;

@@ -45,15 +45,15 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    currentUser(email: String!): User
+    getSingleUser(email: String!): User
     getUserGroups(userId: ID!): [Group]!
-    #getGroupUsers(groupId: ID!): [User]!
     getSingleGroup(groupId: ID!): Group
-    #getGroupCategories(groupId: ID!): [Category]!
+    getGroupCategories(groupId: ID!): [Category]!
     getSingleCategory(categoryId: ID!): Category
     #getCategoryTasks(categoryId: ID!): [Task]!
     getSingleTask(taskId: ID!): Task
   }
+
 
   type Mutation {
     register(firstName: String!, lastName: String!, email: String!, password: String!): Auth
@@ -63,7 +63,7 @@ const typeDefs = `#graphql
     addCategory(groupId: ID!, categoryName: String!): Category
     addTask(categoryId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String!, assignedUserId: ID): Task
     addComment(taskId: ID!, commentText: String!): Task
-    updateGroup(groupId: ID!, groupName: String!): Group
+    #updateGroup(groupId: ID!, groupName: String!): Group
     updateCategory(categoryId: ID!, categoryName: String!): Category
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String! assignedUserId: ID!): Task
     removeGroup(groupId: ID!): Group
