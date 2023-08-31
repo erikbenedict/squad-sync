@@ -28,8 +28,8 @@ export default function Registration() {
           password: formState.password,
         },
       });
-      const { token, user } = mutationResponse.data.register;
-      loginUser(user, token);
+      const { token, currentUser } = mutationResponse.data.register;
+      loginUser(currentUser, token);
       navigate('/dashboard');
     } catch (e) {
       console.log(e);
@@ -43,8 +43,8 @@ export default function Registration() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
-        <div className="bg-gray-400 dark:bg-gray-600 w-full p-1">
+      <div className="w-full max-w-md p-8 bg-gray-400 rounded-md shadow-md dark:bg-gray-600">
+        <div className="w-full p-1 bg-gray-400 dark:bg-gray-600">
           <h2 className="mb-4 text-2xl font-semibold text-center md-2">
             Register
           </h2>
@@ -52,7 +52,7 @@ export default function Registration() {
         <form
           id="registration-form"
           onSubmit={handleFormSubmit}
-          className="bg-gray-100 dark:bg-gray-400 rounded-md p-3"
+          className="p-3 bg-gray-100 rounded-md dark:bg-gray-400"
         >
           <div className="mb-4">
             <label htmlFor="firstName">
@@ -104,12 +104,12 @@ export default function Registration() {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+            className="w-full px-4 py-2 mt-2 text-white transition ease-in-out bg-gray-700 rounded-lg hover:-translate-y-1 hover:scale-105 focus:outline-none"
           >
             Sign Up
           </button>
           {error && (
-            <p className="mt-4 text-red-500 dark:text-amber-300 text-sm font-semibold">
+            <p className="mt-4 text-sm font-semibold text-red-500 dark:text-amber-300">
               The provided credentials are incorrect
             </p>
           )}
@@ -117,7 +117,7 @@ export default function Registration() {
             Already have an account?{' '}
             <Link
               to="/login"
-              className="text-blue-500 dark:text-cyan-200 hover:underline font-medium"
+              className="font-medium text-blue-500 dark:text-cyan-200 hover:underline"
             >
               Login here
             </Link>
