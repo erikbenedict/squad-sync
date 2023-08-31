@@ -10,6 +10,11 @@ import { CookiesProvider } from "react-cookie";
 import "./index.css"
 import { CurrentUserProvider } from "./context";
 
+
+import "flowbite/dist/flowbite.min.css";
+
+
+
 import App from "./App";
 import Error from "./pages/Error";
 import Landing from "./pages/Landing";
@@ -21,6 +26,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+    
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route index element={<Landing />} />
       <Route path="login" element={<Login />} />
@@ -41,7 +47,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CookiesProvider>
       <CurrentUserProvider>
-        <RouterProvider router={router} />
+           <RouterProvider router={router} />
       </CurrentUserProvider>
     </CookiesProvider>
   </React.StrictMode>

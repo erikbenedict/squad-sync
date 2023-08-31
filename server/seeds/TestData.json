@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johndoe@example.com",
+      "password": "hashedpassword123"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "janesmith@example.com",
+      "password": "hashedpassword456"
+    }
+  ],
+
+  "groups": [
+    {
+      "name": "Group 1",
+      "userId": 1
+    },
+    {
+      "name": "Group 2",
+      "userId": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Category 1",
+      "groupId": 1
+    },
+    {
+      "name": "Category 2",
+      "groupId": 2
+    }
+  ],
+  "tasks": [
+    {
+      "name": "Task 1",
+      "categoryId": 1
+    },
+    {
+      "name": "Task 2",
+      "categoryId": 2
+    }
+  ]
+}

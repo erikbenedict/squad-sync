@@ -1,3 +1,4 @@
+// resolvers.js
 const { User, Group, Category, Task } = require('../models');
 const { signToken, AuthenticationError } = require('../utils');
 
@@ -94,6 +95,7 @@ const resolvers = {
       return updatedGroup;
     },
 
+
     addCategory: async (parent, { groupId, categoryName }) => {
       const category = await Category.create({ categoryName });
 
@@ -108,6 +110,7 @@ const resolvers = {
 
     addTask: async (
       parent,
+
       {
         categoryId,
         taskName,
