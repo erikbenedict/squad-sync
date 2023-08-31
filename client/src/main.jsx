@@ -45,10 +45,14 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-      <Route path="task/:taskId" element={
-      <ProtectedRoute>
-      <Task />} />
-      </ProtectedRoute>
+      <Route 
+        path="task/:taskId" 
+        element={
+          <ProtectedRoute>
+            <Task />
+          </ProtectedRoute>}
+        />
+      
     </Route>
   )
 );
