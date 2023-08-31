@@ -2,24 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCurrentUserContext } from '../context/CurrentUser';
 import DarkModeToggle from "./DarkModeToggle";
-import { Collapse } from 'flowbite';
 
 function Header() {
   const { isLoggedIn, logoutUser } = useCurrentUserContext();
 
-  // Initialize the Collapse object
-  const collapse = new Collapse({
-    targetEl: document.getElementById('navbar-default'),
-    triggerEl: document.getElementById('navbar-toggle-button'),
-  });
 
   return (
     <nav className="border-gray-200 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-screen-xl  flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="/" className="flex items-center">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" />
+        <Link to="/" className="flex items-center">
+          <img src="https://cdn-icons-png.flaticon.com/128/11473/11473477.png" className="h-8 mr-3" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SquadSync</span>
-        </a>
+        </Link>
        
         <button
           id="navbar-toggle-button"

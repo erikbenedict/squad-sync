@@ -17,7 +17,7 @@ const Landing = () => {
     <div className="flex items-center justify-center min-h-screen ">
       {!showCarousel ? (
         <div
-          className="bg-white p-2 w-45 md:p-16 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-600 max-w-screen-sm mx-auto"
+          className="bg-gray-400 p-2 w-45 md:p-16 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-600 max-w-screen-sm mx-auto"
           style={{ maxWidth: "100vw" }}
         >
           <h1 className="text-4xl font-semibold mb-4 text-gray-800 dark:text-black text-center">
