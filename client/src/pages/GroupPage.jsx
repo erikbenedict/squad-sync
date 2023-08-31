@@ -61,7 +61,7 @@ function GroupPage() {
     <div className="h-screen p-6 bg-gray-100 dark:bg-gray-900 w-3/4 mx-auto">
       <div className="lg:my-20 p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
         <header className="group-header mt-5 mb-5 flex items-end justify-between">
-          <h1 className="group-name text-5xl font-semibold">
+          <h1 className="group-name text-5xl font-semibold dark:text-white">
             {group.groupName}
           </h1>
           <div className="flex">
@@ -93,7 +93,7 @@ function GroupPage() {
                   onClick={() => props.setShowInnerModal('form-elements')}
                   className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
                 >
-                  Add member
+                  ✚ Add member
                 </Button>
                 <Modal
                   show={props.showInnerModal === 'form-elements'}

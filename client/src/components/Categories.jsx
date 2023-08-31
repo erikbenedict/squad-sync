@@ -82,7 +82,7 @@ function Categories({ groupId }) {
           {categories.map((category) => (
             <div
               key={category._id}
-              className="category-div border-4 rounded-lg border-2 border-gray-900 shadow-2xl hover:bg-white bg-slate-300 p-2 mb-3 flex justify-between items-center cursor-pointer"
+              className="category-div rounded-lg border-2 border-gray-900 shadow-2xl bg-slate-300 p-2 mb-3 flex justify-between items-center transition ease-in-out hover:bg-slate-200 hover:-translate-y-1 hover:scale-105  cursor-pointer"
               onClick={() => setSelectedCategory(category)}
             >
               <h3 className="category-name font-semibold text-lg">
@@ -99,7 +99,7 @@ function Categories({ groupId }) {
           ))}
         </div>
         <div
-          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 ${
+          className={`single-category-div w-1/2 border-4 rounded-lg border-solid border-slate-300 bg-gray-400 dark:bg-gray-600 p-3 mb-3 ${
             selectedCategory ? '' : 'hidden'
           }`}
         >
@@ -120,7 +120,7 @@ function Categories({ groupId }) {
         onClick={() => props.setOpenModal('form-elements')}
         className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
       >
-        <i className="fa-solid fa-plus pr-2"></i>Category
+        ✚ Category
       </Button>
       <Modal
         show={props.openModal === 'form-elements'}
