@@ -291,6 +291,11 @@ const resolvers = {
 
     removeCategory: async (parent, { groupId, categoryId }) => {
       const category = await Category.findOneAndDelete({ _id: categoryId });
+
+      const tasksToDelete = category.tasks || [];
+
+      await Task.deleteMany({ _id: { $in: tasksToDelete } });
+
       await Group.findOneAndUpdate(
         { _id: groupId },
         { $pull: { categories: category._id } }

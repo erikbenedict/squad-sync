@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_GROUP_CATEGORIES } from '../graphql/queries';
-import { ADD_CATEGORY } from '../graphql/mutations';
+import { ADD_CATEGORY, REMOVE_CATEGORY } from '../graphql/mutations';
 import SingleCategory from '../components/SingleCategory';
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
 
@@ -22,6 +22,8 @@ function Categories({ groupId }) {
     refetchQueries: [{ query: QUERY_GROUP_CATEGORIES, variables: { groupId } }],
   });
 
+  const [removeCategory] = useMutation(REMOVE_CATEGORY);
+
   const updateCategory = (newData) => {
     console.log(newData);
     const updatedCategories = categories.map((category) =>
@@ -30,6 +32,24 @@ function Categories({ groupId }) {
     console.log(updatedCategories);
     setCategories(updatedCategories);
     setSelectedCategory(newData);
+  };
+
+  const handleRemoveCategory = async (event, categoryId) => {
+    event.preventDefault();
+    try {
+      await removeCategory({
+        variables: {
+          groupId: groupId,
+          categoryId: categoryId,
+        },
+      });
+      setCategories((updatedCategories) =>
+        updatedCategories.filter((category) => category._id !== categoryId)
+      );
+      setSelectedCategory(null);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleCategoryFormSubmit = async (event) => {
@@ -62,10 +82,17 @@ function Categories({ groupId }) {
           {categories.map((category) => (
             <div
               key={category._id}
-              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3  "
+              className="category-div border-4 rounded-lg border-solid border-slate-300 p-3 mb-3 flex justify-between"
               onClick={() => setSelectedCategory(category)}
             >
               <h3 className="category-name">{category.categoryName}</h3>
+              <button
+                type="button"
+                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center mr-2 mb-2"
+                onClick={(event) => handleRemoveCategory(event, category._id)}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>

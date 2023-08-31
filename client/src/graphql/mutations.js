@@ -231,8 +231,8 @@ export const REMOVE_USER_FROM_GROUP = gql`
 `;
 
 export const REMOVE_CATEGORY = gql`
-  mutation removeCategory($categoryId: ID!) {
-    removeCategory(categoryId: $categoryId) {
+  mutation removeCategory($groupId: ID!, $categoryId: ID!) {
+    removeCategory(groupId: $groupId, categoryId: $categoryId) {
       _id
     }
   }
