@@ -75,7 +75,10 @@ export default function SingleCategory({ category, updateCategory }) {
               )}`}
               href={`/taskPage/${task._id}`}
             >
-              {task.taskName} {task.dueDate}
+              <div className="">
+                <div>{task.taskName}</div>
+                <div>{task.dueDate ? `Due Date: ${task.dueDate}` : null}</div>
+              </div>
             </ListGroup.Item>
           ))
         )}

@@ -261,6 +261,9 @@ const resolvers = {
         const categoriesToDelete = groupToDelete.categories;
         await Category.deleteMany({ _id: { $in: categoriesToDelete } });
 
+        const tasksToDelete = categoriesToDelete.tasks;
+        await Task.deleteMany({ _id: { $in: tasksToDelete } });
+
         await Group.findByIdAndDelete(groupId);
 
         return true;

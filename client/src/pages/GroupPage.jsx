@@ -2,8 +2,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QUERY_SINGLE_GROUP } from '../graphql/queries';
-import { ADD_USER_TO_GROUP } from '../graphql/mutations';
-import { REMOVE_GROUP } from '../graphql/mutations';
+import { ADD_USER_TO_GROUP, REMOVE_GROUP } from '../graphql/mutations';
 import Categories from '../components/Categories';
 import { Button, Modal, TextInput, Label } from 'flowbite-react';
 
@@ -49,7 +48,7 @@ function GroupPage() {
       await removeGroup({
         variables: { groupId },
       });
-      // props.setShowInnerModal(undefined);
+      props.setShowInnerModal(undefined);
       navigate('/dashboard');
     } catch (e) {
       console.error(e);
