@@ -9,6 +9,7 @@ One of the standout features of SquadSync is its collaborative nature. Users can
 With SquadSync, empowerment and efficiency intertwine, ensuring your tasks and lists remain impeccably organized while fostering collaborative excellence.
 
 ## Table of Contents
+
 1. [Installation](#installation)
 2. [Instructions](#instructions)
 3. [Motivations](#motivations)
