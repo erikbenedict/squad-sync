@@ -1,4 +1,6 @@
+//queries.js
 import { gql } from '@apollo/client';
+
 
 export const QUERY_SINGLE_USER = gql`
   query getSingleUser($email: String!) {
@@ -114,3 +116,4 @@ export const QUERY_SINGLE_TASK = gql`
     }
   }
 `;
+

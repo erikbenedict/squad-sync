@@ -1,3 +1,4 @@
+//Category.js
 const { Schema, model } = require('mongoose');
 
 const categorySchema = new Schema({

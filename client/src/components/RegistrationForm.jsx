@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { REGISTER_USER } from '../graphql/mutations';
-
 import { useCurrentUserContext } from '../context/CurrentUser';
 
 export default function Registration() {
@@ -33,7 +32,6 @@ export default function Registration() {
       loginUser(user, token);
       navigate('/dashboard');
     } catch (e) {
-    // eslint-disable-next-line no-console
       console.log(e);
     }
   };
@@ -44,63 +42,69 @@ export default function Registration() {
   };
 
   return (
-    <>
-      {error ? (
-        <div>
-          <p className="error-text">The provided credentials are incorrect</p>
-        </div>
-      ) : null}
-      <form id="registration-form" onSubmit={handleFormSubmit}>
-        <h2>Register</h2>
-        <label htmlFor="firstName">
-          First name:
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formState.firstName}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="lastName">
-          Last name:
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formState.lastName}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="email">
-          Email:
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">
-          Sign Up
-        </button>
-        <p>
-          Already have an account? Login
-          {' '}
-          <Link to="/register">here</Link>
-        </p>
-      </form>
-    </>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-white">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-semibold mb-6">Register</h2>
+        <form id="registration-form" onSubmit={handleFormSubmit}>
+          <div className="mb-4">
+            <label htmlFor="firstName">
+              First name:
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formState.firstName}
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="lastName">
+              Last name:
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formState.lastName}
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="email">
+              Email:
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="youremail@test.com"
+                value={formState.email}
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="password">
+              Password:
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="******"
+                value={formState.password}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+          >
+            Sign Up
+          </button>
+          {error && (
+            <p className="mt-4 text-red-500 text-sm">The provided credentials are incorrect</p>
+          )}
+          <p className="mt-4">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-500 hover:underline">Login here</Link>
+          </p>
+        </form>
+      </div>
+    </div>
   );
 }

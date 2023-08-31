@@ -1,3 +1,4 @@
+// typeDefs.js
 const typeDefs = `#graphql
   type User {
     _id: ID
