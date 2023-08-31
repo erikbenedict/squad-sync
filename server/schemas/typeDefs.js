@@ -66,6 +66,7 @@ const typeDefs = `#graphql
     #updateGroup(groupId: ID!, groupName: String!): Group
     updateCategory(categoryId: ID!, categoryName: String!): Category
     updateTask(taskId: ID!, taskName: String!, taskDescription: String, dueDate: String!, priority: String! assignedUserId: ID!): Task
+    updateTaskDescription(taskId: ID!, taskDescription: String!): Task
     removeGroup(groupId: ID!): Group
     removeUserFromGroup(userId: ID!, groupId: ID!): Group
     removeCategory(groupId: ID!, categoryId: ID!): Category
