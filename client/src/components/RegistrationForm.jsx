@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,12 +12,12 @@ export default function Registration() {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
   });
 
   const [register, { error }] = useMutation(REGISTER_USER);
 
-  const handleFormSubmit = async event => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
       const mutationResponse = await register({
@@ -36,7 +36,7 @@ export default function Registration() {
     }
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
   };
@@ -50,6 +50,7 @@ export default function Registration() {
             <label htmlFor="firstName">
               First name:
               <input
+                className="dark:text-black"
                 type="text"
                 id="firstName"
                 name="firstName"
@@ -60,6 +61,7 @@ export default function Registration() {
             <label htmlFor="lastName">
               Last name:
               <input
+                className="dark:text-black"
                 type="text"
                 id="lastName"
                 name="lastName"
@@ -70,6 +72,7 @@ export default function Registration() {
             <label htmlFor="email">
               Email:
               <input
+                className="dark:text-black"
                 type="email"
                 id="email"
                 name="email"
@@ -81,6 +84,7 @@ export default function Registration() {
             <label htmlFor="password">
               Password:
               <input
+                className="dark:text-black"
                 type="password"
                 id="password"
                 name="password"
@@ -97,11 +101,15 @@ export default function Registration() {
             Sign Up
           </button>
           {error && (
-            <p className="mt-4 text-red-500 text-sm">The provided credentials are incorrect</p>
+            <p className="mt-4 text-red-500 text-sm">
+              The provided credentials are incorrect
+            </p>
           )}
           <p className="mt-4">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-500 hover:underline">Login here</Link>
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Login here
+            </Link>
           </p>
         </form>
       </div>
