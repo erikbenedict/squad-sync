@@ -42,15 +42,23 @@ export default function Registration() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-white">
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-6">Register</h2>
-        <form id="registration-form" onSubmit={handleFormSubmit}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
+        <div className="bg-gray-400 dark:bg-gray-600 w-full p-1">
+          <h2 className="mb-4 text-2xl font-semibold text-center md-2">
+            Register
+          </h2>
+        </div>
+        <form
+          id="registration-form"
+          onSubmit={handleFormSubmit}
+          className="bg-gray-100 dark:bg-gray-400 rounded-md p-3"
+        >
           <div className="mb-4">
             <label htmlFor="firstName">
               First name:
               <input
-                className="dark:text-black"
+                className="w-full px-3 py-2 border rounded-md dark:text-black"
                 type="text"
                 id="firstName"
                 name="firstName"
@@ -61,7 +69,7 @@ export default function Registration() {
             <label htmlFor="lastName">
               Last name:
               <input
-                className="dark:text-black"
+                className="w-full px-3 py-2 border rounded-md dark:text-black"
                 type="text"
                 id="lastName"
                 name="lastName"
@@ -72,7 +80,7 @@ export default function Registration() {
             <label htmlFor="email">
               Email:
               <input
-                className="dark:text-black"
+                className="w-full px-3 py-2 border rounded-md dark:text-black"
                 type="email"
                 id="email"
                 name="email"
@@ -84,7 +92,7 @@ export default function Registration() {
             <label htmlFor="password">
               Password:
               <input
-                className="dark:text-black"
+                className="w-full px-3 py-2 border rounded-md dark:text-black"
                 type="password"
                 id="password"
                 name="password"
@@ -96,18 +104,21 @@ export default function Registration() {
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full px-4 py-2 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
           >
             Sign Up
           </button>
           {error && (
-            <p className="mt-4 text-red-500 text-sm">
+            <p className="mt-4 text-red-500 dark:text-amber-300 text-sm font-semibold">
               The provided credentials are incorrect
             </p>
           )}
           <p className="mt-4">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-500 hover:underline">
+            <Link
+              to="/login"
+              className="text-blue-500 dark:text-cyan-200 hover:underline font-medium"
+            >
               Login here
             </Link>
           </p>

@@ -75,23 +75,23 @@ export default function SingleCategory({ category, updateCategory }) {
   };
 
   return (
-    <div className="single-category-container">
-      <div className="border-4 rounded-lg border-solid border-slate-300 w-full flex justify-center items-center mb-3 p-2">
+    <div className="single-category-container w-3/4 mx-auto">
+      <div className="border-4 rounded-lg border-solid border-slate-300 bg-gray-200 dark:bg-gray-400 w-full flex justify-center items-center mb-3 p-2">
         <h3 className="single-category-title text-xl font-medium">
-          {category.categoryName} Tasks
+          ---- {category.categoryName} Tasks ----
         </h3>
       </div>
       <div className="task-list mb-2">
         {category.tasks.length === 0 ? (
-          <div className="items-center bg-slate-400 border-2 rounded-lg border-solid border-slate-300 p-2 text-center">
+          <div className="items-center bg-slate-200 border-2 rounded-lg border-solid border-slate-300 p-2 text-center font-semibold">
             Add a task to get started!
           </div>
         ) : (
           category.tasks.map((task) => (
             <Link
-              to={`/task/${task._id}?groupId=${category._id}`}
+              to={`/task/${task._id}`}
               key={task._id}
-              className={`flex justify-between items-center bg-slate-400 border-2 rounded-lg border-solid border-slate-300 p-2 cursor-pointer ${getPriorityClass(
+              className={`flex justify-between items-center font-semibold border-2 rounded-lg border-solid border-slate-300 mb-2 p-2 cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-105  ${getPriorityClass(
                 task.priority
               )}`}
             >
@@ -112,8 +112,11 @@ export default function SingleCategory({ category, updateCategory }) {
       </div>
 
       {/* <---- Modal ----> */}
-      <Button onClick={() => props.setOpenModal('form-elements')}>
-        <i className="fa-solid fa-plus"></i>Task
+      <Button
+        onClick={() => props.setOpenModal('form-elements')}
+        className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+      >
+        ✚ Task
       </Button>
       <Modal
         show={props.openModal === 'form-elements'}
@@ -156,6 +159,7 @@ export default function SingleCategory({ category, updateCategory }) {
                 />
               </div>
               <Select id="priority" required>
+                <option>None</option>
                 <option>Low</option>
                 <option>Medium</option>
                 <option>High</option>
@@ -173,7 +177,12 @@ export default function SingleCategory({ category, updateCategory }) {
               />
             </div>
             <div className="w-full">
-              <Button type="submit">Add task!</Button>
+              <Button
+                type="submit"
+                className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+              >
+                Add task!
+              </Button>
             </div>
           </form>
         </Modal.Body>
@@ -184,13 +193,15 @@ export default function SingleCategory({ category, updateCategory }) {
 
 function getPriorityClass(priority) {
   if (priority === 'High') {
-    return 'bg-red-500';
+    return 'bg-red-600';
   }
   if (priority === 'Medium') {
-    return 'bg-amber-500';
+    return 'bg-yellow-500';
   }
   if (priority === 'Low') {
-    return 'bg-green-500';
+    return 'bg-emerald-500';
   }
-  return '';
+  if (priority === 'None') {
+    return 'bg-gray-200';
+  }
 }

@@ -37,10 +37,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:text-white dark:bg-gray-900">
-      <div className="w-full max-w-md p-8 bg-white rounded-md shadow-md dark:bg-gray-800">
-        <form id="login-form" onSubmit={handleFormSubmit}>
-          <h2 className="mb-4 text-xl font-semibold">Login</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-md p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
+        <div className="bg-gray-400 dark:bg-gray-600 w-full p-1">
+          <h2 className="mb-4 text-2xl font-semibold text-center md-2">
+            Login
+          </h2>
+        </div>
+        <form
+          id="login-form"
+          onSubmit={handleFormSubmit}
+          className="bg-gray-100 dark:bg-gray-400 rounded-md p-3"
+        >
           <label htmlFor="email" className="block mb-2">
             Email:
             <input
@@ -67,19 +75,22 @@ export default function Login() {
           </label>
 
           <button
-            className="w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+            className="w-full px-4 py-2 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
             type="submit"
           >
             Login
           </button>
           {error && (
-            <p className="mt-2 text-sm text-red-500">
+            <p className="mt-2 text-sm font-semibold text-red-500 dark:text-amber-300">
               The provided credentials are incorrect
             </p>
           )}
           <p className="mt-4">
             Need an account?{' '}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link
+              to="/register"
+              className="text-blue-500 dark:text-cyan-200 hover:underline font-medium"
+            >
               Sign up here
             </Link>
           </p>

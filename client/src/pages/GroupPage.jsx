@@ -58,104 +58,134 @@ function GroupPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="container max-w-[75%] mx-auto">
-      <header className="group-header mt-5 mb-5 flex items-end justify-between">
-        <h1 className="group-name text-5xl">{group.groupName}</h1>
-        <div className="flex">
-          <Button onClick={() => props.setShowOuterModal('default')}>
-            Group Members
-          </Button>
-          <Modal
-            show={props.showOuterModal === 'default'}
-            onClose={() => props.setShowOuterModal(undefined)}
-          >
-            <Modal.Header>{group.groupName} Members</Modal.Header>
-            <Modal.Body>
-              <div className="space-y-6">
-                <ul>
-                  {group.users.map((user) => (
-                    <li key={user._id} className="pr-2">
-                      •{user.firstName} {user.lastName}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              {/* Add new member modal */}
-              <Button onClick={() => props.setShowInnerModal('form-elements')}>
-                Add member
-              </Button>
-              <Modal
-                show={props.showInnerModal === 'form-elements'}
-                size="md"
-                popup
-                onClose={() => props.setShowInnerModal(undefined)}
-              >
-                <Modal.Header />
-                <Modal.Body>
-                  <form className="space-y-6" onSubmit={handleMemberFormSubmit}>
-                    <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                      Add a new member
-                    </h3>
-                    <div>
-                      <div className="mb-2 block">
-                        <Label
-                          htmlFor="userEmail"
-                          value="Email address of new member"
+    <div className="h-screen p-6 bg-gray-100 dark:bg-gray-900 w-3/4 mx-auto">
+      <div className="lg:my-20 p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
+        <header className="group-header mt-5 mb-5 flex items-end justify-between">
+          <h1 className="group-name text-5xl font-semibold dark:text-white">
+            {group.groupName}
+          </h1>
+          <div className="flex">
+            <Button
+              onClick={() => props.setShowOuterModal('default')}
+              className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+            >
+              Group Members
+            </Button>
+            <Modal
+              show={props.showOuterModal === 'default'}
+              onClose={() => props.setShowOuterModal(undefined)}
+            >
+              <Modal.Header>{group.groupName} Members</Modal.Header>
+              <Modal.Body>
+                <div className="space-y-6">
+                  <ul>
+                    {group.users.map((user) => (
+                      <li key={user._id} className="text-lg font-medium">
+                        • {user.firstName} {user.lastName}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                {/* Add new member modal */}
+                <Button
+                  onClick={() => props.setShowInnerModal('form-elements')}
+                  className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                >
+                  ✚ Add member
+                </Button>
+                <Modal
+                  show={props.showInnerModal === 'form-elements'}
+                  size="md"
+                  popup
+                  onClose={() => props.setShowInnerModal(undefined)}
+                >
+                  <Modal.Header />
+                  <Modal.Body>
+                    <form
+                      className="space-y-6"
+                      onSubmit={handleMemberFormSubmit}
+                    >
+                      <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                        Add a new member
+                      </h3>
+                      <div>
+                        <div className="mb-2 block">
+                          <Label
+                            htmlFor="userEmail"
+                            value="Email address of new member"
+                          />
+                        </div>
+                        <TextInput
+                          id="userEmail"
+                          placeholder="member@example.com"
+                          required
                         />
                       </div>
-                      <TextInput
-                        id="userEmail"
-                        placeholder="member@example.com"
-                        required
-                      />
-                    </div>
-                    <div className="w-full">
-                      <Button type="submit">Add member!</Button>
-                    </div>
-                  </form>
-                </Modal.Body>
-              </Modal>
-            </Modal.Footer>
+                      <div className="w-full">
+                        <Button
+                          type="submit"
+                          className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                        >
+                          Add member!
+                        </Button>
+                      </div>
+                    </form>
+                  </Modal.Body>
+                </Modal>
+              </Modal.Footer>
+            </Modal>
+          </div>
+        </header>
+        <div className=" bg-gray-100 dark:bg-gray-400 rounded-md border-8 p-3 mb-3">
+          <Categories groupId={groupId} />
+        </div>
+        <div className="flex justify-end">
+          {/* <---- Modal ----> */}
+          <Button
+            onClick={() => props.setOpenModal('pop-up')}
+            color="failure"
+            className="transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
+          >
+            Delete Group
+          </Button>
+          <Modal
+            show={props.openModal === 'pop-up'}
+            size="md"
+            popup
+            onClose={() => props.setOpenModal(undefined)}
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="text-center">
+                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                  Are you sure you want to delete{' '}
+                  <span className="text-xl dark:text-white font-bold">
+                    {group.groupName}
+                  </span>
+                  ?
+                </h3>
+                <div className="flex justify-center gap-4">
+                  <Button
+                    color="failure"
+                    onClick={handleDeleteGroup}
+                    className="transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                  >
+                    Yes, I&rsquo;m sure
+                  </Button>
+                  <Button
+                    color="gray"
+                    onClick={() => props.setOpenModal(undefined)}
+                    className="transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                  >
+                    No, cancel
+                  </Button>
+                </div>
+              </div>
+            </Modal.Body>
           </Modal>
         </div>
-      </header>
-      <div className="border-4 rounded-lg border-solid border-slate-300 p-3 mb-3">
-        <Categories groupId={groupId} />
-      </div>
-      <div className="flex justify-end">
-        {/* <---- Modal ----> */}
-        <Button onClick={() => props.setOpenModal('pop-up')} color="failure">
-          Delete Group
-        </Button>
-        <Modal
-          show={props.openModal === 'pop-up'}
-          size="md"
-          popup
-          onClose={() => props.setOpenModal(undefined)}
-        >
-          <Modal.Header />
-          <Modal.Body>
-            <div className="text-center">
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete{' '}
-                <span className="text-xl font-bold">{group.groupName}</span>?
-              </h3>
-              <div className="flex justify-center gap-4">
-                <Button color="failure" onClick={handleDeleteGroup}>
-                  Yes, I&rsquo;m sure
-                </Button>
-                <Button
-                  color="gray"
-                  onClick={() => props.setOpenModal(undefined)}
-                >
-                  No, cancel
-                </Button>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
       </div>
     </div>
   );

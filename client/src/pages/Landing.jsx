@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Carousel } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Carousel } from 'flowbite-react';
+import { Link } from 'react-router-dom';
+import delegation from '../assets/delegation.png';
 
 const Landing = () => {
   const [showCarousel, setShowCarousel] = useState(false);
@@ -17,35 +18,39 @@ const Landing = () => {
     <div className="flex items-center justify-center min-h-screen ">
       {!showCarousel ? (
         <div
-          className="bg-gray-400 p-2 w-45 md:p-16 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-600 max-w-screen-sm mx-auto"
-          style={{ maxWidth: "100vw" }}
+          className="bg-gray-400 p-2 w-45 md:p-16 rounded-lg shadow-lg dark:bg-gray-600 max-w-screen-sm mx-auto"
+          style={{ maxWidth: '100vw' }}
         >
           <h1 className="text-4xl font-semibold mb-4 text-gray-800 dark:text-black text-center">
             Welcome to SquadSync
           </h1>
-          <div className="bg-white p-6 md:p-10 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-400">
+          <div className="p-6 md:p-10 rounded-lg shadow-lg bg-gray-100 dark:bg-gray-400">
+            <div className="flex justify-center mb-4">
+              <img src={delegation} alt="delegation icon" className="h-40" />
+            </div>
             <div className="max-w-md mx-auto text-center">
-              <p className="mb-8 text-gray-700 text-lg leading-relaxed">
-                Your <span className="font-semibold">ultimate solution</span>{" "}
-                for seamless <span className="font-semibold">team collaboration</span> and efficient{" "}
+              <p className="mb-8 text-gray-700 text-lg leading-relaxed bg-gray-200 p-2 rounded-lg shadow-lg">
+                • Your <span className="font-semibold">ultimate solution</span>{' '}
+                for seamless{' '}
+                <span className="font-semibold">team collaboration</span> and
+                efficient{' '}
                 <span className="font-semibold">task management </span>.
                 <br />
                 <br />
-                Say goodbye to scattered tasks and disjointed communication.
+                • Say goodbye to scattered tasks and disjointed communication.
                 <br />
-                <br />
-                Say hello to a new era of{" "}
+                <br />• Say hello to a new era of{' '}
                 <span className="font-semibold">productivity</span>.
               </p>
               <div className="flex justify-center space-x-4">
-                <button className="btn btn-primary px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
+                <button className="btn btn-primary px-6 py-3 rounded-lg text-white bg-slate-700 transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none">
                   <Link to="/login">Login</Link>
                 </button>
-                <button className="btn btn-primary px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
+                <button className="btn btn-primary px-6 py-3 rounded-lg text-white bg-slate-700 transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none">
                   <Link to="/register">Register</Link>
                 </button>
                 <button
-                  className="btn btn-primary px-6 py-3 rounded-lg text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+                  className="btn btn-primary px-6 py-3 rounded-lg text-white bg-slate-700 transition ease-in-out hover:-translate-y-1 hover:scale-110 focus:outline-none"
                   onClick={handleCarouselButtonClick}
                 >
                   Learn More
@@ -74,14 +79,14 @@ const Landing = () => {
                     Task Management
                   </h2>
                 </div>
-                <div className="text-base text-black overflow-auto">
+                <div className="text-base text-black overflow-auto mb-3 bg-gray-100 p-2 rounded-lg shadow-lg">
                   {/* Add a scrollable container for the text */}
                   <p>
                     SquadSync, a cutting-edge task management application,
                     redefines the way teams collaborate and organize their
-                    projects. Inspired by the concept of a "HoneyDo" list,
-                    SquadSync empowers users to create and manage tasks, all
-                    within a seamless and unified platform.
+                    projects. Inspired by the concept of a &quot;HoneyDo&quot;
+                    list, SquadSync empowers users to create and manage tasks,
+                    all within a seamless and unified platform.
                     {/* Continue your text content */}
                   </p>
                 </div>
@@ -95,24 +100,24 @@ const Landing = () => {
               }}
               data-carousel-item
             >
-              <div className="absolute inset-0 flex flex-col justify-between text-white bg-black bg-opacity-50 p-8">
+              <div className="absolute inset-0 flex flex-col justify-between text-gray-200 bg-black bg-opacity-50 p-8">
                 <div className="text-center ">
-                  <h2 className="text-3xl text-gray-900 font-bold mb-2">
+                  <h2 className="text-3xl font-bold mb-2">
                     How to Use SquadSync
                   </h2>
                 </div>
-                <div className="text-base text-black overflow-auto">
-                  <div className="text-gray-900 text-bold">
+                <div className="text-base overflow-auto font-semibold p-8">
+                  <div className="text-bold">
                     Getting started with SquadSync is easy! Follow these simple
                     steps to harness the power of collaborative task management:
                     <ol className="list-decimal ml-6 mt-3">
                       <li>
                         <Link
                           to="/register"
-                          className="text-blue-500 hover:underline"
+                          className="text-cyan-400 hover:underline"
                         >
                           Create an Account here:
-                        </Link>{" "}
+                        </Link>{' '}
                         Sign up for SquadSync using your email and password.
                       </li>
                       <li>
