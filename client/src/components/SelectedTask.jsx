@@ -1,19 +1,20 @@
-import { useQuery, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { QUERY_SINGLE_TASK } from "../graphql/queries";
-import { Button, Card, Label, Textarea } from "flowbite-react";
-import { UPDATE_TASK_DESCRIPTION } from "../graphql/mutations";
+import { useQuery, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { QUERY_SINGLE_TASK } from '../graphql/queries';
+import { Button, Card, Label, Textarea } from 'flowbite-react';
+import { UPDATE_TASK_DESCRIPTION } from '../graphql/mutations';
 
 const SelectedTask = () => {
-  let { taskId } = useParams();
+  const navigate = useNavigate();
+  const { taskId } = useParams();
   const { loading, error, data } = useQuery(QUERY_SINGLE_TASK, {
     variables: { taskId },
   });
   const task = data?.getSingleTask || {};
 
-  const [newDescription, setNewDescription] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [newDescription, setNewDescription] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const [updateTaskDescription, { error: updateError }] = useMutation(
     UPDATE_TASK_DESCRIPTION,
@@ -21,6 +22,10 @@ const SelectedTask = () => {
       refetchQueries: [{ query: QUERY_SINGLE_TASK, variables: { taskId } }],
     }
   );
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   const handleDescriptionSubmit = async (event) => {
     event.preventDefault();
@@ -32,30 +37,15 @@ const SelectedTask = () => {
           taskDescription: newDescription,
         },
       });
-      setNewDescription("");
-      setSuccessMessage("Task description updated successfully!");
+      setNewDescription('');
+      setSuccessMessage('Task description updated successfully!');
 
       setTimeout(() => {
-        setSuccessMessage("");
+        setSuccessMessage('');
       }, 3000);
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const formatDate = (timestamp) => {
-    const milliseconds = parseInt(timestamp);
-    const date = new Date(milliseconds);
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      timeZoneName: "short",
-    };
-    return date.toLocaleDateString(undefined, options);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -67,9 +57,19 @@ const SelectedTask = () => {
     <>
       <div className="flex items-center justify-center h-screen bg-gray-200">
         <Card className="w-7/12 p-3 bg-slate-50 rounded-xl">
-          <h5 className="text-2xl font-bold tracking-tight text-gray-900 2xl:text-5xl xl:text-3xl lg:text-2xl dark:text-white">
-            {task.taskName}
-          </h5>
+          <div className="flex justify-between">
+            <h5 className="text-2xl font-bold tracking-tight text-gray-900 2xl:text-5xl xl:text-3xl lg:text-2xl dark:text-white">
+              {task.taskName}
+            </h5>
+
+            <button
+              className="bg-gray-800 dark:bg-white p-2 rounded-lg shadow-lg text-white dark:text-gray-600 hover:bg-gray-500 dark:hover:bg-gray-700 focus:outline-none"
+              onClick={handleGoBack}
+            >
+              Back
+            </button>
+          </div>
+
           {task.priority && (
             <p className="font-medium text-gray-800 dark:text-gray-200 2xl:text-2xl xl:text-xl lg:text-lg">
               Priority: {task.priority}
@@ -77,7 +77,7 @@ const SelectedTask = () => {
           )}
           {task.dueDate && (
             <p className="font-medium text-gray-800 dark:text-gray-200 2xl:text-2xl xl:text-xl lg:text-lg">
-              Due Date: {formatDate(task.dueDate)}
+              Due Date: {task.dueDate}
             </p>
           )}
           <p className="font-normal text-gray-700 dark:text-gray-400 2xl:text-2xl xl:text-xl lg:text-lg">
@@ -96,7 +96,7 @@ const SelectedTask = () => {
                 value={newDescription}
                 onChange={(e) => setNewDescription(e.target.value)}
                 required
-                className="2xl:text-lg xl:text-md lg:text-sm"
+                className="2xl:text-lg xl:text-md lg:text-sm mb-2"
               />
               <Button type="submit" className="bg-gray-900">
                 Update
