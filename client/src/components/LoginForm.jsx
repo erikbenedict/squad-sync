@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { Link, useNavigate } from "react-router-dom";
-import { LOGIN_USER } from "../graphql/mutations";
-import { useCurrentUserContext } from "../context/CurrentUser";
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { Link, useNavigate } from 'react-router-dom';
+import { LOGIN_USER } from '../graphql/mutations';
+import { useCurrentUserContext } from '../context/CurrentUser';
 
 export default function Login() {
   const { loginUser } = useCurrentUserContext();
   const navigate = useNavigate();
   const [formState, setFormState] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [login, { error }] = useMutation(LOGIN_USER);
@@ -45,7 +45,7 @@ export default function Login() {
             Email:
             <input
               id="email"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:text-black"
               placeholder="youremail@test.com"
               name="email"
               type="email"
@@ -57,7 +57,7 @@ export default function Login() {
             Password:
             <input
               id="password"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border rounded-md dark:text-black"
               placeholder="******"
               name="password"
               type="password"
@@ -65,7 +65,7 @@ export default function Login() {
               onChange={handleChange}
             />
           </label>
-          
+
           <button
             className="w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
             type="submit"
@@ -78,7 +78,7 @@ export default function Login() {
             </p>
           )}
           <p className="mt-4">
-            Need an account?{" "}
+            Need an account?{' '}
             <Link to="/register" className="text-blue-500 hover:underline">
               Sign up here
             </Link>

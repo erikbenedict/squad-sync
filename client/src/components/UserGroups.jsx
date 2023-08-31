@@ -1,23 +1,23 @@
-import { useQuery, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { Card, Button, Label, Modal, TextInput } from "flowbite-react";
-import { QUERY_USER_GROUPS } from "../graphql/queries";
-import { ADD_GROUP } from "../graphql/mutations";
-import { Link } from "react-router-dom";
-import { useCurrentUserContext } from "../context/CurrentUser";
+import { useQuery, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { Card, Button, Label, Modal, TextInput } from 'flowbite-react';
+import { QUERY_USER_GROUPS } from '../graphql/queries';
+import { ADD_GROUP } from '../graphql/mutations';
+import { Link } from 'react-router-dom';
+import { useCurrentUserContext } from '../context/CurrentUser';
 
 function UserGroups() {
   const { currentUser } = useCurrentUserContext();
   const { loading, error, data } = useQuery(QUERY_USER_GROUPS, {
     variables: { userId: currentUser._id },
     onError: (err) => {
-      console.error("Error fetching groups:", err);
+      console.error('Error fetching groups:', err);
     },
   });
 
   const userGroups = data?.getUserGroups || [];
 
-  const [openModal, setOpenModal] = useState("");
+  const [openModal, setOpenModal] = useState('');
   const props = { openModal, setOpenModal };
 
   const [addGroup, { error: mutationError }] = useMutation(ADD_GROUP, {
@@ -63,13 +63,13 @@ function UserGroups() {
       </div>
       <div className="flex flex-col items-center">
         <Button
-          onClick={() => props.setOpenModal("form-elements")}
+          onClick={() => props.setOpenModal('form-elements')}
           color="dark"
         >
           <i className="pr-1 fa-solid fa-plus"></i>✚ Create Group
         </Button>
         <Modal
-          show={props.openModal === "form-elements"}
+          show={props.openModal === 'form-elements'}
           size="md"
           popup
           onClose={() => props.setOpenModal(undefined)}
