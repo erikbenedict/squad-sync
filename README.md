@@ -40,7 +40,7 @@ Download and install the Node.js LTS version from [Node.js](https://nodejs.org/e
 3. Once you have a new account created you will be taken to the Dashboard page where you can create your first group!
 4. After your groups have been created you can add users to each group and start creating tasks.
 5. Once the tasks have been made you can assign a priority to each task and even add a due date for the task to be completed.
-6. Finally once the task has been completed you can check it off and move on to the next one!
+6. Finally, once the task has been completed you can check it off and move on to the next one!
 
 
 ## Motivations
