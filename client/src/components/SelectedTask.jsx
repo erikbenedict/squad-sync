@@ -55,21 +55,21 @@ const SelectedTask = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen p-6 bg-gray-100 dark:bg-gray-900 mx-auto">
-        <Card className="w-7/12 p-3 bg-slate-50 rounded-xl">
+      <div className="flex items-center justify-center h-screen p-6 mx-auto bg-gray-100 dark:bg-gray-900">
+        <Card className="w-7/12 p-1 bg-slate-50 rounded-xl">
           <div className="flex justify-between">
             <h5 className="text-xl font-bold tracking-tight text-gray-900 2xl:text-5xl xl:text-3xl lg:text-2xl dark:text-white">
               {task.taskName}
             </h5>
 
             <Button
-              className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+              className="p-1 mt-2 text-white transition ease-in-out bg-gray-700 rounded-lg hover:-translate-y-1 hover:scale-105 focus:outline-none"
               onClick={handleGoBack}
             >
               Back
             </Button>
           </div>
-          <div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2 h-12">
+          <div className="flex items-center h-12 p-2 rounded-lg shadow-lg bg-slate-300">
             {task.priority && (
               <p className="font-medium text-gray-800 2xl:text-2xl xl:text-xl lg:text-lg">
                 Priority:{' '}
@@ -83,14 +83,14 @@ const SelectedTask = () => {
               </p>
             )}
           </div>
-          <div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2">
+          <div className="flex items-center p-2 rounded-lg shadow-lg bg-slate-300">
             {task.dueDate && (
               <p className="font-medium text-gray-800 bg-slate-300 2xl:text-2xl xl:text-xl lg:text-lg">
                 Due Date: {task.dueDate}
               </p>
             )}
           </div>
-          <div className="bg-slate-300 flex items-center rounded-lg shadow-lg p-2">
+          <div className="flex items-center p-2 rounded-lg shadow-lg bg-slate-300">
             <p className="font-medium text-gray-800 2xl:text-2xl xl:text-xl lg:text-lg">
               Description: {task.taskDescription}
             </p>
@@ -100,7 +100,7 @@ const SelectedTask = () => {
               <Label
                 htmlFor="newDescription"
                 value="Edit Description▼"
-                className="2xl:text-xl xl:text-lg lg:text-md pl-1"
+                className="pl-1 2xl:text-xl xl:text-lg lg:text-md"
               />
               <Textarea
                 id="newDescription"
@@ -108,11 +108,11 @@ const SelectedTask = () => {
                 value={newDescription}
                 onChange={(e) => setNewDescription(e.target.value)}
                 required
-                className="2xl:text-lg xl:text-md lg:text-sm mb-2"
+                className="mb-2 2xl:text-lg xl:text-md lg:text-sm"
               />
               <Button
                 type="submit"
-                className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+                className="p-1 mt-2 text-white transition ease-in-out bg-gray-700 rounded-lg hover:-translate-y-1 hover:scale-105 focus:outline-none"
               >
                 Update
               </Button>
