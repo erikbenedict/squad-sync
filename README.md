@@ -55,7 +55,7 @@ Here is a list of our motivations for this project!
 - Create a space for people to come together and organize their lives even when they're not always so organized
 ## Deployed Application
 
-[Click here to go our SquadSync application!]()
+[Click here to go our SquadSync application!](https://squad-sync-5e36d690cf8e.herokuapp.com/)
 ## Questions
 If you have any questions feel free to reach out to any of the team members below:
 
