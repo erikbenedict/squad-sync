@@ -73,21 +73,25 @@ const Landing = () => {
                   backgroundPosition: `center calc(50% - 60px)`,
                 }}
               >
-                <div className="text-left mt-5 mr-4">
-                  <h2 className="text-2xl text-gray-900 font-bold mb-2">
-                    Revolutionizing<br></br> Team Collaboration <br></br>and
-                    Task Management
-                  </h2>
+                <div className="text-left mt-1 mr-4 pb-4 pl-1 font-semibold md:bg-transparent">
+                  <div className="bg-white inline-block p-4 rounded-lg shadow-lg">
+                    <h2 className="bg-white md:text-xl lg:text-2xl text-gray-900 font-bold mb-2">
+                      Revolutionizing
+                      <br />
+                      Team Collaboration
+                      <br />
+                      and Task Management
+                    </h2>
+                  </div>
                 </div>
-                <div className="text-base text-black overflow-auto mb-3 bg-gray-100 p-2 rounded-lg shadow-lg">
-                  {/* Add a scrollable container for the text */}
+
+                <div className=" text-black overflow-auto mb-3 bg-gray-100 p-2 rounded-lg shadow-lg">
                   <p>
                     SquadSync, a cutting-edge task management application,
                     redefines the way teams collaborate and organize their
                     projects. Inspired by the concept of a &quot;HoneyDo&quot;
                     list, SquadSync empowers users to create and manage tasks,
                     all within a seamless and unified platform.
-                    {/* Continue your text content */}
                   </p>
                 </div>
               </div>

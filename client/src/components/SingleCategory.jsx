@@ -75,10 +75,13 @@ export default function SingleCategory({ category, updateCategory }) {
   };
 
   return (
-    <div className="single-category-container w-3/4 mx-auto">
+    <div className="single-category-container md:w-3/4 mx-auto">
       <div className="border-4 rounded-lg border-solid border-slate-300 bg-gray-200 dark:bg-gray-400 w-full flex justify-center items-center mb-3 p-2">
         <h3 className="single-category-title text-xl font-medium">
-          ---- {category.categoryName} Tasks ----
+          <span className="hidden md:inline">
+            ---- {category.categoryName}{' '}
+          </span>{' '}
+          Tasks <span className="hidden md:inline">----</span>
         </h3>
       </div>
       <div className="task-list mb-2">
@@ -96,12 +99,14 @@ export default function SingleCategory({ category, updateCategory }) {
               )}`}
             >
               <div>
-                <h3>{task.taskName}</h3>
-                <div>{task.dueDate ? `Due Date: ${task.dueDate}` : null}</div>
+                <h3 className="">{task.taskName}</h3>
+                <div className="hidden">
+                  {task.dueDate ? `Due Date: ${task.dueDate}` : null}
+                </div>
               </div>
               <button
                 type="button"
-                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center"
+                className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-xs text-center hidden md:inline"
                 onClick={(event) => handleRemoveTask(event, task._id)}
               >
                 X

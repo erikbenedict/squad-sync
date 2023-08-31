@@ -58,18 +58,18 @@ function GroupPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="h-screen p-6 bg-gray-100 dark:bg-gray-900 w-3/4 mx-auto">
+    <div className="p-6 bg-gray-100 dark:bg-gray-900 md:w-3/4 mx-auto">
       <div className="lg:my-20 p-8 bg-gray-400 dark:bg-gray-600 rounded-md shadow-md">
-        <header className="group-header mt-5 mb-5 flex items-end justify-between">
-          <h1 className="group-name text-5xl font-semibold dark:text-white">
+        <header className="group-header mt-5 mb-5 md:flex md:items-end justify-between items-center">
+          <h1 className="group-name text-center text-2xl mr-1 md:text-5xl font-semibold dark:text-white">
             {group.groupName}
           </h1>
-          <div className="flex">
+          <div className="flex justify-center">
             <Button
               onClick={() => props.setShowOuterModal('default')}
-              className="p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
+              className="md:p-1 mt-2 text-white bg-gray-700 rounded-lg transition ease-in-out hover:-translate-y-1 hover:scale-105 focus:outline-none"
             >
-              Group Members
+              <span className="hidden md:block">Group</span> Members
             </Button>
             <Modal
               show={props.showOuterModal === 'default'}
@@ -80,7 +80,10 @@ function GroupPage() {
                 <div className="space-y-6">
                   <ul>
                     {group.users.map((user) => (
-                      <li key={user._id} className="text-lg font-medium">
+                      <li
+                        key={user._id}
+                        className="text-lg dark:text-white font-medium"
+                      >
                         • {user.firstName} {user.lastName}
                       </li>
                     ))}
@@ -141,7 +144,7 @@ function GroupPage() {
         <div className=" bg-gray-100 dark:bg-gray-400 rounded-md border-8 p-3 mb-3">
           <Categories groupId={groupId} />
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center md:justify-end">
           {/* <---- Modal ----> */}
           <Button
             onClick={() => props.setOpenModal('pop-up')}
