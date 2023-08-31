@@ -89,7 +89,7 @@ export default function SingleCategory({ category, updateCategory }) {
         ) : (
           category.tasks.map((task) => (
             <Link
-              to={`/task/${task._id}?groupId=${category._id}`}
+              to={`/task/${task._id}`}
               key={task._id}
               className={`flex justify-between items-center font-semibold border-2 rounded-lg border-solid border-slate-300 mb-2 p-2 cursor-pointer transition ease-in-out hover:-translate-y-1 hover:scale-105  ${getPriorityClass(
                 task.priority
