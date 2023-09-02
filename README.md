@@ -10,13 +10,15 @@ One of the standout features of SquadSync is its collaborative nature. Users can
 
 With SquadSync, empowerment and efficiency intertwine, ensuring your tasks and lists remain impeccably organized while fostering collaborative excellence.
 
-## Table of Contents
+## Built With
 
-1. [Installation](#installation)
-2. [Instructions](#instructions)
-3. [Motivations](#motivations)
-4. [Deployed Application](#deployed-application)
-5. [Questions](#questions)
+- MongoDB
+- Express
+- React
+- Node
+- GraphQL
+- Apollo
+- Tailwind
 
 ## Installation
 
@@ -38,7 +40,7 @@ Download and install the Node.js LTS version from [Node.js](https://nodejs.org/e
   ```sh
   npm run develop
   ```
-- (!! IMPORTANT !!) Make sure to create a `.env` file in the server folder for teh `JWT_SECRET`
+- (!! IMPORTANT !!) Make sure to create a `.env` file in the server folder for the `JWT_SECRET`
 
 ## Instructions
 
