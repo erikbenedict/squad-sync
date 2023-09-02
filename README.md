@@ -22,8 +22,6 @@ With SquadSync, empowerment and efficiency intertwine, ensuring your tasks and l
 
 ## Installation
 
-Download and install the Node.js LTS version from [Node.js](https://nodejs.org/en).
-
 - Clone the repo
   ```sh
   git clone git@github.com:erikbenedict/squad-sync.git
@@ -57,6 +55,10 @@ Below are screenshots of the application
 ![screenshot](./client/src/assets/screenshot2.png)
 ![screenshot](./client/src/assets/screenshot3.png)
 
+## Deployed Application
+
+[Click here to go our SquadSync application!](https://squad-sync-5e36d690cf8e.herokuapp.com/)
+
 ## Motivations
 
 Here is a list of our motivations for this project!
@@ -68,9 +70,6 @@ Here is a list of our motivations for this project!
 - Showcase our creativity while improving our habits of coding
 - Create a space for people to come together and organize their lives even when they're not always so organized
 
-## Deployed Application
-
-[Click here to go our SquadSync application!](https://squad-sync-5e36d690cf8e.herokuapp.com/)
 
 ## Contributing
 
