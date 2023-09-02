@@ -64,11 +64,11 @@ Below are screenshots of the application
 Here is a list of our motivations for this project!
 
 - Practice on working with a team to build a functioning application start to finish in under two weeks
-- Make it easier to keep all of your ToDo's in one location where you won't lose them or forget
+- Make it easier to keep all of your tasks in one location where you won't lose them or forget
 - Continue to have a better understanding working with GitHub workflow
 - Work with React, MongoDB, GraphQL and JWT to create a working application while increasing our understanding in each of the universally used technologies
 - Showcase our creativity while improving our habits of coding
-- Create a space for people to come together and organize their lives even when they're not always so organized
+- Develop a space for people to connect and collaboratively coordinate their life plans
 
 
 ## Contributing
